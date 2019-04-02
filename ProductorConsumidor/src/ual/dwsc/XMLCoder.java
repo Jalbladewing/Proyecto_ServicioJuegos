@@ -1,0 +1,112 @@
+package ual.dwsc;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
+
+public class XMLCoder 
+{
+	public static boolean codeXML(String fileName, List<Noticia> noticias) throws Exception
+	{
+	       if(noticias.isEmpty())
+	       {
+	          return false;
+	      }else{
+	              DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+	              DocumentBuilder builder = factory.newDocumentBuilder();
+	              DOMImplementation implementation = builder.getDOMImplementation();
+	              Document document = implementation.createDocument(null, fileName, null);
+	              document.setXmlVersion("1.0");
+	             //Main Node
+	              Element raiz = document.getDocumentElement();
+	             //Por cada noticia creamos un registro noticia que contendra el email, el titulo de la noticia y su contenido
+	             for(int i=0; i<noticias.size();i++)
+	             {
+	                     Element notNode = document.createElement("noticia");
+	                     Element titNode = document.createElement("titulo");
+	                     Element contNode = document.createElement("contenido");
+	                     
+	                     Text nodeTitValue = document.createTextNode(noticias.get(i).getTitulo());
+	                     Text nodeContValue = document.createTextNode(noticias.get(i).getContenido());
+	                     
+	                     titNode.appendChild(nodeTitValue);
+	                     contNode.appendChild(nodeContValue);
+	                     
+	                     notNode.appendChild(titNode);
+	                     notNode.appendChild(contNode);
+	                     
+	                     raiz.appendChild(notNode); //pegamos el elemento a la raiz "Documento"
+	              }
+	            //Generate XML
+	             Source source = new DOMSource(document);
+	            //Indicamos donde lo queremos almacenar
+	             Result result = new StreamResult(new java.io.File("D:\\Descargas\\Informatica\\Master Informatica\\Segundo Cuatrimestre\\Desarrollo Web\\" + fileName+".xml")); //nombre del archivo
+	             Transformer transformer = TransformerFactory.newInstance().newTransformer();
+	             transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");//Saltos de linea
+	             transformer.setOutputProperty(OutputKeys.INDENT, "yes");//Saltos de linea
+	             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2"); //Tabulaciones
+	             transformer.transform(source, result);
+	          }
+	       
+	       return true;
+	  }
+	
+	public static List<Noticia> decodeXML(String fileName)
+	{
+		 try {
+	          File inputFile = new File("D:\\Descargas\\Informatica\\Master Informatica\\Segundo Cuatrimestre\\Desarrollo Web\\" + fileName +".xml");
+	          DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+	          DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+	          Document doc = dBuilder.parse(inputFile);
+	          doc.getDocumentElement().normalize();
+	          List<Noticia> listaNoticias = new ArrayList<Noticia>();
+	          //System.out.println("Elemento raiz :" + doc.getDocumentElement().getNodeName());
+	          NodeList nList = doc.getElementsByTagName("noticia");
+	         System.out.println("----------------------------");
+	         for (int temp = 0; temp < nList.getLength(); temp++) {
+	            Node nNode = nList.item(temp);
+	            //System.out.println("\nCurrent Elemento :" + nNode.getNodeName());
+	            if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+	                    Element eElement = (Element) nNode;
+	                    //Control de errores
+	                    if(eElement.getElementsByTagName("titulo").item(0) == null)
+	                    {
+	                    	System.out.println("Falta el elemento Título"); 
+	                    	continue;
+	                    }
+	                    if(eElement.getElementsByTagName("contenido").item(0) == null)
+	                    {
+	                    	System.out.println("Falta el elemento Contenido"); 
+	                    	continue;
+	                    }
+	                    
+	                    listaNoticias.add(new Noticia(eElement.getElementsByTagName("titulo").item(0).getTextContent(),eElement.getElementsByTagName("contenido").item(0).getTextContent()));
+	             }
+	         }
+	         
+	         return listaNoticias;
+	     }catch (Exception e) 
+		 {
+	        System.out.println("Error encontrado, " + e.getMessage());
+	     }
+		 
+		 return new ArrayList<Noticia>(); 
+	}
+}

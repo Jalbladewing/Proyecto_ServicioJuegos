@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<noticias>
+  <noticia>
+    <titulo>titulo</titulo>
+    <contenido>contenido</contenido>
+  </noticia>
+    <noticia>
+    <titulo>titulo</titulo>
+    <contenido>contenido</contenido>
+  </noticia>
+</noticias>

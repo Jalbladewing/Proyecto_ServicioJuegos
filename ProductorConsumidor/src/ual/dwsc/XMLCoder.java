@@ -40,17 +40,21 @@ public class XMLCoder
 	             for(int i=0; i<noticias.size();i++)
 	             {
 	                     Element notNode = document.createElement("noticia");
-	                     Element titNode = document.createElement("titulo");
-	                     Element contNode = document.createElement("contenido");
+	                     Element dateNode = document.createElement("date");
+	                     Element shortNode = document.createElement("shortDescription");
+	                     Element longNode = document.createElement("longDescription");
 	                     
-	                     Text nodeTitValue = document.createTextNode(noticias.get(i).getTitulo());
-	                     Text nodeContValue = document.createTextNode(noticias.get(i).getContenido());
+	                     Text nodeDateValue = document.createTextNode(noticias.get(i).getDate());
+	                     Text nodeShortValue = document.createTextNode(noticias.get(i).getShortDescription());
+	                     Text nodeLongValue = document.createTextNode(noticias.get(i).getLongDescription());
 	                     
-	                     titNode.appendChild(nodeTitValue);
-	                     contNode.appendChild(nodeContValue);
+	                     dateNode.appendChild(nodeDateValue);
+	                     shortNode.appendChild(nodeShortValue);
+	                     longNode.appendChild(nodeLongValue);
 	                     
-	                     notNode.appendChild(titNode);
-	                     notNode.appendChild(contNode);
+	                     notNode.appendChild(dateNode);
+	                     notNode.appendChild(shortNode);
+	                     notNode.appendChild(longNode);
 	                     
 	                     raiz.appendChild(notNode); //pegamos el elemento a la raiz "Documento"
 	              }
@@ -86,18 +90,24 @@ public class XMLCoder
 	            if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 	                    Element eElement = (Element) nNode;
 	                    //Control de errores
-	                    if(eElement.getElementsByTagName("titulo").item(0) == null)
+	                    if(eElement.getElementsByTagName("date").item(0) == null)
 	                    {
-	                    	System.out.println("Falta el elemento Título"); 
+	                    	System.out.println("Falta el elemento Fecha"); 
 	                    	continue;
 	                    }
-	                    if(eElement.getElementsByTagName("contenido").item(0) == null)
+	                    if(eElement.getElementsByTagName("shortDescription").item(0) == null)
 	                    {
-	                    	System.out.println("Falta el elemento Contenido"); 
+	                    	System.out.println("Falta el elemento Descripción Corta"); 
 	                    	continue;
 	                    }
 	                    
-	                    listaNoticias.add(new Noticia(eElement.getElementsByTagName("titulo").item(0).getTextContent(),eElement.getElementsByTagName("contenido").item(0).getTextContent()));
+	                    if(eElement.getElementsByTagName("longDescription").item(0) == null)
+	                    {
+	                    	System.out.println("Falta el elemento Descripción Larga"); 
+	                    	continue;
+	                    }
+	                    
+	                    listaNoticias.add(new Noticia(eElement.getElementsByTagName("date").item(0).getTextContent(),eElement.getElementsByTagName("shortDescription").item(0).getTextContent(), eElement.getElementsByTagName("longDescription").item(0).getTextContent()));
 	             }
 	         }
 	         

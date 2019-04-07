@@ -19,9 +19,19 @@
                 </center>
                 <br>
                 <form action="http://localhost:8080/ProductorConsumidor/servlet" method="post">
-                  <center><font face="Arial,Helvetica"><font size="-1">Título:</font></font>
-                     <input name="title" size="40">
-                     <p><textarea name="XMLtemplate" rows="25" cols="50"></textarea>
+                  <center><font face="Arial,Helvetica"><font size="-1">Fecha:</font></font>
+                     <input type=date name="fecha">
+                     <p>
+                     	<font face="Arial,Helvetica"><font size="-1">Descripción Corta</font></font>
+                     </p>
+                     <p>                     	
+                     	<input name="shortDescription" size="40"> 
+                     </p>
+                     <p>
+                     	<font face="Arial,Helvetica"><font size="-1">Descripción Larga</font></font>
+                     </p>
+                     <p>
+                     	<textarea name="XMLtemplate" rows="25" cols="50"></textarea>
                      </p>
                      <p>
                      	<input value=" Crear noticia " alt="Pulsa el botón para añadir una noticia" type="submit"> 

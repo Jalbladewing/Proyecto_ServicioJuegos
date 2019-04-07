@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <noticias>
   <noticia>
-    <titulo>titulo</titulo>
-    <contenido>contenido</contenido>
+    <date>titulo</date>
+    <shortDescription>descripcion corta</shortDescription>
+    <longDescription>descripcion larga</longDescription>
   </noticia>
     <noticia>
-    <titulo>titulo</titulo>
-    <contenido>contenido</contenido>
+    <date>titulo</date>
+    <shortDescription>descripcion corta</shortDescription>
+    <longDescription>descripcion larga</longDescription>
   </noticia>
 </noticias>

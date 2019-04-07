@@ -7,8 +7,9 @@
 	</xsd:complexType>
 	<xsd:complexType name="tipoNoticia">
 		<xsd:sequence>
-			<xsd:element name="titulo" type="xsd:string"/>
-			<xsd:element name="contenido" type="xsd:string"/>
+			<xsd:element name="date" type="xsd:string"/>
+			<xsd:element name="shortDescription" type="xsd:string"/>
+			<xsd:element name="longDescription" type="xsd:string"/>
 		</xsd:sequence>
 	</xsd:complexType>
 </xsd:schema>

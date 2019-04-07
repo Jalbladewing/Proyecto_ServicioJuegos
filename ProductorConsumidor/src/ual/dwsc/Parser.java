@@ -27,8 +27,9 @@ public class Parser {
             {
                     Element eElement = (Element) nNode;
 
-                    eElement.getElementsByTagName("titulo").item(0).getTextContent();
-                    eElement.getElementsByTagName("contenido").item(0).getTextContent();
+                    eElement.getElementsByTagName("date").item(0).getTextContent();
+                    eElement.getElementsByTagName("shortDescription").item(0).getTextContent();
+                    eElement.getElementsByTagName("longDescription").item(0).getTextContent();
             }
          }
        } catch (Exception e) 

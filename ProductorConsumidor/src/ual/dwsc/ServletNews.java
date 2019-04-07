@@ -86,10 +86,12 @@ public class ServletNews extends HttpServlet {
     public void doPost (HttpServletRequest request, HttpServletResponse response)
     throws IOException, ServletException {
        Enumeration elements = request.getParameterNames();
-       String name1 = (String)elements.nextElement(); /** Titulo */
+       String name1 = (String)elements.nextElement(); /** Fecha */
        String value_name1 = request.getParameter(name1);
-       String name2 = (String)elements.nextElement(); /** Contenido */
+       String name2 = (String)elements.nextElement(); /** Descripción Corta */
        String value_name2 = request.getParameter(name2);
+       String name3 = (String)elements.nextElement(); /** Descripción Larga */
+       String value_name3 = request.getParameter(name3);
        
        response.setContentType("text/html");
        PrintWriter out = response.getWriter();
@@ -104,7 +106,7 @@ public class ServletNews extends HttpServlet {
     	   getreference();
 		
     	   List noticias = XMLCoder.decodeXML("noticias");
-	       noticias.add(new Noticia(value_name1,value_name2));
+	       noticias.add(new Noticia(value_name1,value_name2, value_name3));
 	       boolean estado = false;
 	       
 	       if(bufferImpl.canPut())

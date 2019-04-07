@@ -1,37 +1,49 @@
 package ual.dwsc;
 
 public class Noticia {
-	private String titulo;
-	private String contenido;
+	private String date;
+	private String shortDescription;
+	private String longDescription;
 	
-	public Noticia(String titulo, String contenido) 
+	public Noticia(String date, String shortDescription, String longDescription) 
 	{
-		this.titulo = titulo;
-		this.contenido = contenido;
+		this.date = date;
+		this.shortDescription = shortDescription;
+		this.longDescription = longDescription;
 	}
 
-	public String getTitulo() 
+	public String getDate() 
 	{
-		return titulo;
+		return date;
 	}
 	
-	public void setTitulo(String titulo) 
+	public void setDate(String date) 
 	{
-		this.titulo = titulo;
+		this.date = date;
 	}
 	
-	public String getContenido() 
+	public String getShortDescription() 
 	{
-		return contenido;
+		return shortDescription;
 	}
 	
-	public void setContenido(String contenido) 
+	public void setShortDescription(String shortDescription) 
 	{
-		this.contenido = contenido;
+		this.shortDescription = shortDescription;
+	}
+	
+	public String getLongDescription() 
+	{
+		return longDescription;
+	}
+	
+	public void setLongDescription(String longDescription) 
+	{
+		this.longDescription = longDescription;
 	}
 
 	@Override
 	public String toString() {
-		return "Noticia [titulo=" + titulo + ", contenido=" + contenido + "]";
+		return "Noticia [Fecha=" + date + ", descripción corta=" + shortDescription + ", descripción larga=" + longDescription + "]";
 	}
 }

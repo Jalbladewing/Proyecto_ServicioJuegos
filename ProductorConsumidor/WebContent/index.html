@@ -1,5 +1,9 @@
 <html>
     <head>
+		<link rel="stylesheet" id="bootstrap-css" href="css/bootstrap.css">
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/jquery.min.js"></script>
+    
        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
        <meta name="Author" content="Luis Iribarne">
        <meta name="Description" content="University of Almeria (Spain)">
@@ -7,7 +11,7 @@
     </head>
     <body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
        alink="#990000" link="#043a66" vlink="#999900">
-       <dl>
+       <dl class="card bg-light card-body mx-auto" style="max-width: 400px;">
           <table nosave="" border="0" cellspacing="5" width="98%">
              <tbody>
               <tr nosave="" valign="top">
@@ -20,24 +24,34 @@
                 <br>
                 <form action="http://localhost:8080/ProductorConsumidor/servlet" method="post">
                   <center><font face="Arial,Helvetica"><font size="-1">Fecha:</font></font>
-                     <input type=date name="fecha">
-                     <p>
-                     	<font face="Arial,Helvetica"><font size="-1">Descripción Corta</font></font>
-                     </p>
-                     <p>                     	
-                     	<input name="shortDescription" size="40"> 
-                     </p>
+					 <div class="form-group input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"> <i class="fa fa-calendar"></i> </span>
+						</div>
+					    <input name="fecha" class="form-control" type="date">
+					 </div> 
+                     
+                     <div class="form-group input-group">
+						<div class="input-group-prepend">
+						    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+						 </div>
+				        <input name="shortDescription" class="form-control" placeholder="Descripción Corta" type="text">
+				     </div>
+				     
                      <p>
                      	<font face="Arial,Helvetica"><font size="-1">Descripción Larga</font></font>
                      </p>
                      <p>
-                     	<textarea name="XMLtemplate" rows="25" cols="50"></textarea>
+                     	<div class="md-form">
+					       <i class="fas fa-pencil-alt prefix grey-text"></i>
+					       <textarea name="XMLtemplate" class="md-textarea form-control" rows="5"></textarea>
+					    </div>
                      </p>
                      <p>
-                     	<input value=" Crear noticia " alt="Pulsa el botón para añadir una noticia" type="submit"> 
-                     	<input value=" Previsualizar noticia " alt="Pulsa el botón para previsualizar una noticia" name='action' type="submit" formmethod="get">
-                     	<input value=" Leer noticia " alt="Pulsa el botón para leer una noticia" name='action' type="submit" formmethod="get"> 
-                     	<input value=" Nueva noticia " type="reset">
+                     	<input class="btn btn-primary btn-block" value=" Crear noticia " alt="Pulsa el botón para añadir una noticia" type="submit"> 
+                     	<input class="btn btn-primary btn-block" value=" Previsualizar noticia " alt="Pulsa el botón para previsualizar una noticia" name='action' type="submit" formmethod="get">
+                     	<input class="btn btn-primary btn-block" value=" Leer noticia " alt="Pulsa el botón para leer una noticia" name='action' type="submit" formmethod="get"> 
+                     	<input class="btn btn-primary btn-block" value=" Nueva noticia " type="reset">
                      </p>
                   </center>
                 </form>

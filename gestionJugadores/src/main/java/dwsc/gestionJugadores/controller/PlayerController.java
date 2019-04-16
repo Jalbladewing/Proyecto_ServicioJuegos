@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -75,11 +76,58 @@ public class PlayerController
 	@PostMapping("/addPlayer")
 	public String addPlayer(Player player, Map<String, List<Player>> model) 
 	{
-		playerRepo.save(player);
+		try
+		{
+			playerRepo.save(player);
+			
+		}catch(Exception e)
+		{
+			//return new ResponseEntity<String>("gameTable", HttpStatus.ACCEPTED);
+			//return "gameTable";
+		}
 		
 		ArrayList<Player> players = new ArrayList<Player>(playerRepo.findAll());
 		model.put("players", players);
+		//return new ResponseEntity<Game>(game, HttpStatus.CREATED);
         return "playerTable";
+	}
+	
+	@PutMapping("/editPlayer")
+	public String editPlayer(Player player, Map<String, Player> model) 
+	{
+		try
+		{
+			playerRepo.save(player);
+			
+		}catch(Exception e)
+		{
+			//return new ResponseEntity<String>("gameTable", HttpStatus.ACCEPTED);
+			//return "gameTable";
+		}
+		
+		model.put("player", player);
+		//return new ResponseEntity<Game>(game, HttpStatus.CREATED);
+        return "playercreation";
+	}
+	
+	@PutMapping("/editPlayer/{id}")
+	public ResponseEntity<String> editPlayerById(@PathVariable int id, Map<String, Player> model) 
+	{
+		Player player;
+		
+		try
+		{
+			player = playerRepo.findById(id).get();
+			playerRepo.save(player);
+			
+		}catch(IllegalArgumentException e)
+		{
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("playercreation");
+		}
+		
+		
+		model.put("player", player);
+		return ResponseEntity.ok("playercreation");
 	}
 	
 	@DeleteMapping("/deletePlayer/")
@@ -93,13 +141,21 @@ public class PlayerController
 	}
 	
 	@DeleteMapping("/deletePlayer/{id}")
-	public String deletePlayerById(@PathVariable int id, Map<String, List<Player>> model) 
+	public ResponseEntity<String> deletePlayerById(@PathVariable int id, Map<String, List<Player>> model) 
 	{
-		playerRepo.deleteById(id);
+		try
+		{
+			playerRepo.deleteById(id);
+			
+		}catch(IllegalArgumentException e)
+		{
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("playerTable");
+		}
+		
 		
 		ArrayList<Player> players = new ArrayList<Player>(playerRepo.findAll());
 		model.put("players", players);
-        return "playerTable";
+		return ResponseEntity.ok("playerTable");
 	}
 
 }

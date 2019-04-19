@@ -14,6 +14,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @XmlRootElement
 @Entity
 public class Player 
@@ -27,6 +30,8 @@ public class Player
 	private int age;
 	private String dni;
 	
+	//Players following the player
+	@JsonManagedReference
 	@ManyToMany
 	@JoinTable(
 			  name = "Player_follows_Player", 
@@ -34,6 +39,8 @@ public class Player
 			  inverseJoinColumns = @JoinColumn(name = "Player_followed"))
 	private Set<Player> followingPlayers;
 	
+	//Players being followed by the players
+	@JsonBackReference
 	@ManyToMany
 	@JoinTable(
 			  name = "Player_follows_Player", 

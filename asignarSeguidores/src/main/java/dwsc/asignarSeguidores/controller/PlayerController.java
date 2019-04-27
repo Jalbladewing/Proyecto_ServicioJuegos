@@ -1,10 +1,7 @@
 package dwsc.asignarSeguidores.controller;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
+import java.net.URI;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import dwsc.asignarSeguidores.domain.Player;
 import dwsc.asignarSeguidores.repository.PlayerRepository;
@@ -29,8 +25,34 @@ public class PlayerController
 	@Autowired
 	PlayerRepository playerRepo;
 		
+	@GetMapping("/players/{id}/followers")
+	public ResponseEntity<Set<Player>> findFollowersById(@PathVariable int id)
+	{
+		if(playerRepo.findById(id).isPresent())
+		{
+			return ResponseEntity.ok(playerRepo.findById(id).get().getFollowingPlayers());
+		}else
+		{
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+				
+	}
+	
+	@GetMapping("/players/{id}/followed")
+	public ResponseEntity<Set<Player>> findFollowedById(@PathVariable int id)
+	{
+		if(playerRepo.findById(id).isPresent())
+		{
+			return ResponseEntity.ok(playerRepo.findById(id).get().getFollowingPlayers());
+		}else
+		{
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+				
+	}
+	
 	//Get Followers By Name
-	@RequestMapping("/players/{name}/followers")
+	/*@GetMapping("/players/{name}/followers")
 	public ResponseEntity<Set<Player>> findFollowersByName(@PathVariable String name)
 	{
 		ArrayList<Player> player = new ArrayList<Player>(playerRepo.findByName(name));
@@ -43,10 +65,10 @@ public class PlayerController
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 			
-	}
+	}*/
 	
-	//Get Followed By Name
-	@RequestMapping("/players/{name}/followed")
+	/*//Get Followed By Name
+	@GetMapping("/players/{name}/followed")
 	public ResponseEntity<Set<Player>> findFollowedByName(@PathVariable String name)
 	{
 		ArrayList<Player> player = new ArrayList<Player>(playerRepo.findByName(name));
@@ -59,47 +81,32 @@ public class PlayerController
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 			
-	}
-		
-	/*	//Get Followers By Id
-	@RequestMapping("/players/{id}/games")
-	public ResponseEntity<Set<Player>> findFollowersById(@PathVariable int id)
-	{
-		if(playerRepo.findById(id).isPresent())
-		{
-			return ResponseEntity.ok(playerRepo.findById(id).get().getFollowingPlayers());
-		}else
-		{
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-		}
-			
 	}*/
 		
-	@PostMapping("/players/{playerId}/addFollower/{followerId}")
-	public ResponseEntity<String> addFollowerById(@PathVariable int playerId, @PathVariable int followerId, Map<String, Player> model) 
+	@PostMapping("/players/{playerId}/followers")
+	public ResponseEntity<Player> addFollowerById(@PathVariable int playerId, Player follower) 
 	{
-		Player player, follower;
+		Player player;
 			
 		try
 		{
 			player = playerRepo.findById(playerId).get();
-			follower = playerRepo.findById(followerId).get();
 				
 			player.getFollowingPlayers().add(follower);
 			playerRepo.save(player);
 				
-		}catch(NoSuchElementException e)
+		}catch(Exception e)
 		{
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("playercreation");
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body(null);
 		}
-			
-			
-		model.put("player", player);
-		return ResponseEntity.ok("playercreation");
+				
+		URI location  =  ServletUriComponentsBuilder.fromCurrentRequest().path("/{followerId}").buildAndExpand(follower.getId()).toUri();
+		
+		return ResponseEntity.created(location).build();
 	}
 		
-	@DeleteMapping("/players/{playerId}/deleteFollower/{followerId}")
-	public ResponseEntity<String> deleteFollowerById(@PathVariable int playerId, @PathVariable int followerId, Map<String, Player> model) 
+	@DeleteMapping("/players/{playerId}/followers/{followerId}")
+	public ResponseEntity<Player> deleteFollowerById(@PathVariable int playerId, @PathVariable int followerId) 
 	{
 		Player player, follower;
 			
@@ -107,18 +114,21 @@ public class PlayerController
 		{
 			player = playerRepo.findById(playerId).get();
 			follower = playerRepo.findById(followerId).get();
-				
-			player.getFollowingPlayers().remove(follower);
+			
+			if(!player.getFollowingPlayers().remove(follower))
+			{
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+			}
+			
 			playerRepo.save(player);
 				
-		}catch(NoSuchElementException e)
+		}catch(Exception e)
 		{
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("playercreation");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 			
 			
-		model.put("player", player);
-		return ResponseEntity.ok("playercreation");
+		return ResponseEntity.ok(null);
 	}
 
 }

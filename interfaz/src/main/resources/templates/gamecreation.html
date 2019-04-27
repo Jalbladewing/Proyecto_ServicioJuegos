@@ -1,0 +1,53 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link th:href="@{/css/gamecreation.css}" rel="stylesheet">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script th:src="@{/js/gamecreation.js}"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
+
+<div class="container">
+<div class="card bg-light">
+<article class="card-body mx-auto" style="max-width: 400px;">
+	<h4 class="card-title mt-3 text-center">Crear juego</h4>
+	<p class="divider-text">
+        <span></span>
+    </p>
+	<form action="http://localhost:8080/addGame" method="post" enctype="multipart/form-data">
+	<div class="form-group input-group">
+		<div class="input-group-prepend">
+		    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+		 </div>
+        <input name="name" class="form-control input-text" placeholder="Titulo" type="text">
+    </div> <!-- form-group// -->
+    
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-btn">
+                <span class="btn btn-default btn-file">
+                    Browse… <input type="file" name="imageFile" id="imgInp" placeholder="Subir imagen">
+                </span>
+            </span>
+            <input name="url" type="text" class="form-control" readonly>
+        </div>
+        <img name="fileImage" id='img-upload'/>
+    </div>
+    
+    <div class="form-group input-group">
+    	<div class="input-group-prepend">
+		    <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+		 </div>
+        <textarea name="description" class="form-control" placeholder="Descripcion"></textarea>
+    </div> <!-- form-group// -->
+                                       
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-block"> Crear Juego  </button>
+    </div> <!-- form-group// -->                                                                    
+</form>
+</article>
+</div> <!-- card.// -->
+
+</div> 
+<!--container end.//-->

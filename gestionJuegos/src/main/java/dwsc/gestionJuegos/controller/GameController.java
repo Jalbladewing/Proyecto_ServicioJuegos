@@ -3,6 +3,7 @@ package dwsc.gestionJuegos.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,13 +20,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import dwsc.gestionJuegos.domain.Game;
 import dwsc.gestionJuegos.repository.GameRepository;
@@ -36,27 +40,23 @@ public class GameController
 	@Autowired
 	GameRepository gameRepo;
 	
-	/*@RequestMapping("/student")
-	public ResponseEntity<Object> findStudents()
+	@GetMapping("/games")
+	public ResponseEntity<List<Game>> findGames()
 	{
-		return ResponseEntity.ok(studentRepo.findAll());
-	}
-	
-	@RequestMapping("/students/{name}")
-	public ResponseEntity<Object> findStudentByName(@PathVariable String name)
-	{
-		Student student = studentRepo.findByName(name);
-		if(student != null)
+		ArrayList<Game> game = new ArrayList<Game>(gameRepo.findAll());
+		
+		if(!game.isEmpty())
 		{
-			return ResponseEntity.ok(student);
+			return ResponseEntity.ok(game);
 		}else
 		{
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
-	}*/
+		
+	}
 	
 	//Juego especifico devuelve 200 o 404 (NOT FOUND)
-	@RequestMapping("/game/{name}")
+	@GetMapping("/games/name/{name}")
 	public ResponseEntity<Game> findGameByName(@PathVariable String name)
 	{
 		Game game = gameRepo.findByName(name);
@@ -71,16 +71,83 @@ public class GameController
 		
 	}
 	
-	//Tabla de juegos devuelve 200 siempre.
-	@RequestMapping("/gamestable")
-	public String getGamesTab(Map<String, List<Game>> model) 
+	@GetMapping("/games/{id}")
+	public ResponseEntity<Game> findGameById(@PathVariable int id)
 	{
-		ArrayList<Game> games = new ArrayList<Game>(gameRepo.findAll());
-		model.put("games", games);
+		Game game;
 		
-		return "gameTable";
+		try
+		{
+			game = gameRepo.findById(id).get();
+			
+		}catch(Exception e)
+		{
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+		
+		return ResponseEntity.ok(game);
+		
 	}
 	
+	@PostMapping("/games")
+	public ResponseEntity<Game> addGame(Game game) 
+	{
+		try
+		{
+			gameRepo.save(game);
+			
+		}catch(Exception e)
+		{
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body(null);
+		}
+		
+		URI location  =  ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(game.getId()).toUri();
+		
+		return ResponseEntity.created(location).build();
+	}
+	
+	@PutMapping("/games/{id}")
+	public ResponseEntity<Game> editGameById(Game game, @PathVariable int id) 
+	{
+		Game dbGame;
+		
+		try
+		{
+			dbGame = gameRepo.findById(id).get();
+			dbGame = game;
+			gameRepo.save(dbGame);
+			
+		}catch(Exception e)
+		{
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+		
+		return ResponseEntity.ok(dbGame);
+	}
+	
+	@DeleteMapping("/games/{id}")
+	public ResponseEntity<Game> deleteGameById(@PathVariable int id) 
+	{
+		try
+		{
+			gameRepo.deleteById(id);
+			
+		}catch(Exception e)
+		{
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+		
+		return ResponseEntity.ok(null);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+
 	//Creación de juegos, devuelve 200 siempre.
 	@RequestMapping("/gamecreation")
 	public String getGameCreation(Map<String, List<Game>> model) 
@@ -155,25 +222,6 @@ public class GameController
         return "gamecreation";
 	}
 	
-	@PutMapping("/editGame/{id}")
-	public ResponseEntity<String> editGameById(@PathVariable int id, Map<String, Game> model) 
-	{
-		Game game;
-		
-		try
-		{
-			game = gameRepo.findById(id).get();
-			gameRepo.save(game);
-			
-		}catch(IllegalArgumentException e)
-		{
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("gamecreation");
-		}
-		
-		
-		model.put("game", game);
-		return ResponseEntity.ok("gamecreation");
-	}
 	
 	@DeleteMapping("/deleteGame/")
 	public String deleteGame(Game game, Map<String, List<Game>> model) 
@@ -185,23 +233,6 @@ public class GameController
         return "gameTable";
 	}
 	
-	@DeleteMapping("/deleteGame/{id}")
-	public ResponseEntity<String> deleteGameById(@PathVariable int id, Map<String, List<Game>> model) 
-	{
-		try
-		{
-			gameRepo.deleteById(id);
-			
-		}catch(IllegalArgumentException e)
-		{
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("gameTable");
-		}
-		
-		
-		ArrayList<Game> games = new ArrayList<Game>(gameRepo.findAll());
-		model.put("games", games);
-		return ResponseEntity.ok("gameTable");
-	}
 
 }
 

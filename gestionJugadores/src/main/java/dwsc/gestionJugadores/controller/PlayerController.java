@@ -1,6 +1,7 @@
 package dwsc.gestionJugadores.controller;
 
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -10,22 +11,39 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import dwsc.gestionJugadores.domain.Player;
 import dwsc.gestionJugadores.repository.PlayerRepository;
 
-@Controller
+@RestController
 public class PlayerController 
 {
 	@Autowired
 	PlayerRepository playerRepo;
 		
-	@RequestMapping("/player/{name}")
+	@GetMapping("/players")
+	public ResponseEntity<List<Player>> findPlayers()
+	{
+		ArrayList<Player> player = new ArrayList<Player>(playerRepo.findAll());
+		
+		if(!player.isEmpty())
+		{
+			return ResponseEntity.ok(player);
+		}else
+		{
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+		
+	}
+	
+	@GetMapping("/players/{name}")
 	public ResponseEntity<List<Player>> findPlayerByName(@PathVariable String name)
 	{
 		ArrayList<Player> player = new ArrayList<Player>(playerRepo.findByName(name));
@@ -55,6 +73,72 @@ public class PlayerController
 		
 	}*/
 	
+	@PostMapping("/players")
+	public ResponseEntity<Player> addPlayer(Player player) 
+	{
+		try
+		{
+			playerRepo.save(player);
+			
+		}catch(Exception e)
+		{
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body(null);
+		}
+		
+		/*ArrayList<Player> players = new ArrayList<Player>(playerRepo.findAll());
+		model.put("players", players);
+        return "playerTable";*/
+		
+		URI location  =  ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(player.getId()).toUri();
+		
+		return ResponseEntity.created(location).build();
+	}
+	
+	@PutMapping("/players/{id}")
+	public ResponseEntity<Player> editPlayerById(Player player, @PathVariable int id) 
+	{
+		Player dbPlayer;
+		
+		try
+		{
+			dbPlayer = playerRepo.findById(id).get();
+			dbPlayer = player;
+			playerRepo.save(dbPlayer);
+			
+		}catch(Exception e)
+		{
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+		
+		return ResponseEntity.ok(dbPlayer);
+		/*model.put("player", player);
+		return ResponseEntity.ok("playercreation");*/
+		
+	}
+	
+	@DeleteMapping("/players/{id}")
+	public ResponseEntity<Player> deletePlayerById(@PathVariable int id) 
+	{
+		try
+		{
+			playerRepo.deleteById(id);
+			
+		}catch(Exception e)
+		{
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+		
+		
+		/*ArrayList<Player> players = new ArrayList<Player>(playerRepo.findAll());
+		model.put("players", players);*/
+		return ResponseEntity.ok(null);
+	}
+	
+	
+	
+	
+	
+	
 	@RequestMapping("/playerstable")
 	public String getPlayersTab(Map<String, List<Player>> model) 
 	{
@@ -71,25 +155,6 @@ public class PlayerController
 		model.put("players", players);
 		
 		return "playercreation";
-	}
-	
-	@PostMapping("/addPlayer")
-	public String addPlayer(Player player, Map<String, List<Player>> model) 
-	{
-		try
-		{
-			playerRepo.save(player);
-			
-		}catch(Exception e)
-		{
-			//return new ResponseEntity<String>("gameTable", HttpStatus.ACCEPTED);
-			//return "gameTable";
-		}
-		
-		ArrayList<Player> players = new ArrayList<Player>(playerRepo.findAll());
-		model.put("players", players);
-		//return new ResponseEntity<Game>(game, HttpStatus.CREATED);
-        return "playerTable";
 	}
 	
 	@PutMapping("/editPlayer")
@@ -110,26 +175,6 @@ public class PlayerController
         return "playercreation";
 	}
 	
-	@PutMapping("/editPlayer/{id}")
-	public ResponseEntity<String> editPlayerById(@PathVariable int id, Map<String, Player> model) 
-	{
-		Player player;
-		
-		try
-		{
-			player = playerRepo.findById(id).get();
-			playerRepo.save(player);
-			
-		}catch(IllegalArgumentException e)
-		{
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("playercreation");
-		}
-		
-		
-		model.put("player", player);
-		return ResponseEntity.ok("playercreation");
-	}
-	
 	@DeleteMapping("/deletePlayer/")
 	public String deletePlayer(Player player, Map<String, List<Player>> model) 
 	{
@@ -139,24 +184,5 @@ public class PlayerController
 		model.put("players", players);
         return "playerTable";
 	}
-	
-	@DeleteMapping("/deletePlayer/{id}")
-	public ResponseEntity<String> deletePlayerById(@PathVariable int id, Map<String, List<Player>> model) 
-	{
-		try
-		{
-			playerRepo.deleteById(id);
-			
-		}catch(IllegalArgumentException e)
-		{
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("playerTable");
-		}
-		
-		
-		ArrayList<Player> players = new ArrayList<Player>(playerRepo.findAll());
-		model.put("players", players);
-		return ResponseEntity.ok("playerTable");
-	}
-
 }
 

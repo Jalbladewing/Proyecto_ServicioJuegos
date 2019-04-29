@@ -2,7 +2,7 @@
 <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<script th:src="@{/js/gameTable.js}"/></script>
+<script th:src="@{/js/playerTable.js}"/></script>
 <!------ Include the above in your HEAD tag ---------->
 
 <div th:replace="/includes/header :: header"> </div>
@@ -11,7 +11,7 @@
 	<div class="row">
 
 		<section class="content">
-			<h1>Juegos</h1>
+			<h1>Jugadores</h1>
 			<div class="col-md-8 col-md-offset-2">
 				<div class="panel panel-default">
 					<div class="panel-body">
@@ -26,34 +26,34 @@
 						<div class="table-container">
 							<table class="table table-filter">
 								<tbody>
-									<th:block th:each="game : ${games}">
+									<th:block th:each="player : ${players}">
 									<tr data-status="pagado">
 										<td>
 											<div class="ckbox">
-												<input type="checkbox" th:id="checkbox + ${game.id}">
-												<label th:for="checkbox + ${game.id}"></label>
+												<input type="checkbox" th:id="checkbox + ${player.id}">
+												<label th:for="checkbox + ${player.id}"></label>
 											</div>
 										</td>
 										<td>
-											<span class="star">
-												<input type="checkbox" th:id="star + ${game.id}" th:checked="${game.isFavouriteGame(favouriteGames)}">
-												<label th:for="star + ${game.id}">
-													<i class="glyphicon glyphicon-star" ></i>
+											<span class="heart">
+												<input type="checkbox" th:id="heart + ${player.id}" th:checked="${player.isFollowing(followingPeople)}">
+												<label th:for="heart + ${player.id}">
+													<i class="glyphicon glyphicon-heart" ></i>
 												</label>
 											</span>
 										</td>
 										<td>
 											<div class="media">
 												<a href="#" class="pull-left">
-													<img th:src="@{'/images/' + ${game.url}}" class="media-photo">
+													<img th:src="@{'/images/user.jpg'}" class="media-photo">
 												</a>
 												<div class="media-body">
 													<span class="media-meta pull-right">Febrero 13, 2016</span>
-													<h4 class="title" th:text="${game.name}">
+													<h4 class="title" th:text="${player.name} + ' ' + ${player.lastname}">
 														...
 														<span class="pull-right pagado">(Pagado)</span>
 													</h4>
-													<p class="summary" th:text="${game.description}">...</p>
+													<p class="summary" th:text="${player.age}">...</p>
 												</div>
 											</div>
 										</td>

@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
-	$('.star').on('click', function () {
-      $(this).toggleClass('star-checked');
+	$('.star i').on('click', function () {
+		$(this).
     });
 
     $('.ckbox label').on('click', function () {

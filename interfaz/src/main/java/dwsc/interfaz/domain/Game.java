@@ -1,5 +1,7 @@
 package dwsc.interfaz.domain;
 
+import java.util.ArrayList;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -58,5 +60,14 @@ public class Game
 		this.url = url;
 	}
 	
+	public boolean isFavouriteGame(ArrayList<Game> favouriteGames)
+	{
+		for(int i = 0; i < favouriteGames.size(); i++)
+		{
+			if(getId() == favouriteGames.get(i).getId()) return true;
+		}
+		
+		return false;
+	}
 	
 }

@@ -95,15 +95,7 @@ body {
 	text-align: center;
 	display: block;
 }
-.table-filter .star.star-checked {
-	color: #F0AD4E;
-}
-.table-filter .star:hover {
-	color: #ccc;
-}
-.table-filter .star.star-checked:hover {
-	color: #F0AD4E;
-}
+
 .table-filter .media-photo {
 	max-width: 150px;
 	max-height: 50px;
@@ -139,4 +131,71 @@ body {
 }
 .table-filter .media .summary {
 	font-size: 14px;
+}
+
+input[type=checkbox] { display:none; }
+
+.star>input[type='checkbox']:checked + label{
+  color: #F0AD4E;
+}
+
+.star>input[type='checkbox'] + label{
+  color: #ccc;
+}
+
+.star>input[type='checkbox']:checked + label:hover {
+	color: #ccc;
+}
+
+.star>input[type='checkbox'] + label:hover {
+	color: #F0AD4E;
+}
+
+
+.heart>input[type='checkbox']:checked + label{
+  color: #ff2929;
+}
+
+.heart>input[type='checkbox'] + label{
+  color: #ccc;
+}
+
+.heart>input[type='checkbox']:checked + label:hover {
+	color: #ccc;
+}
+
+.heart>input[type='checkbox'] + label:hover {
+	color: #ff2929;
+}
+
+/*	--------------------------------------------------
+	:: HEADER
+	-------------------------------------------------- */
+
+.img-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: block;
+  position: relative;
+  z-index: 998;
+}
+
+.navbar-login
+{
+    width: 305px;
+    padding: 10px;
+    padding-bottom: 0px;
+}
+
+.navbar-login-session
+{
+    padding: 10px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+
+.icon-size
+{
+    font-size: 87px;
 }

@@ -43,7 +43,25 @@ public class PlayerController
 		
 	}
 	
-	@GetMapping("/players/{name}")
+	@GetMapping("/players/{id}")
+	public ResponseEntity<Player> findPlayerById(@PathVariable int id)
+	{
+		Player player;
+		
+		try
+		{
+			player = playerRepo.findById(id).get();
+			
+		}catch(Exception e)
+		{
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+		
+		return ResponseEntity.ok(player);
+		
+	}
+	
+	/*@GetMapping("/players/{name}")
 	public ResponseEntity<List<Player>> findPlayerByName(@PathVariable String name)
 	{
 		ArrayList<Player> player = new ArrayList<Player>(playerRepo.findByName(name));
@@ -56,7 +74,7 @@ public class PlayerController
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 		
-	}
+	}*/
 	
 	/*@RequestMapping("/player/{dni}")
 	public ResponseEntity<Player> findPlayerByDNI(@PathVariable String dni)

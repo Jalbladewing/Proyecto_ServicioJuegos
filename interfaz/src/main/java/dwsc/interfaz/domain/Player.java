@@ -1,4 +1,4 @@
-package dwsc.gestionJugadores.domain;
+package dwsc.interfaz.domain;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -31,7 +31,14 @@ public class Player
 	private String lastname;
 	private int age;
 	private String dni;
-
+	
+	@ManyToMany
+	@JoinTable(
+			  name = "Player_has_game", 
+			  joinColumns = @JoinColumn(name = "Player_id"), 
+			  inverseJoinColumns = @JoinColumn(name = "Game_id"))
+	private Set<Game> favouriteGames;
+	
 	public int getId() 
 	{
 		return id;
@@ -80,6 +87,26 @@ public class Player
 	public void setDni(String dni)
 	{
 		this.dni = dni;
+	}
+
+	public Set<Game> getFavouriteGames() 
+	{
+		return favouriteGames;
+	}
+
+	public void setFavouriteGames(Set<Game> favouriteGames) 
+	{
+		this.favouriteGames = favouriteGames;
+	}
+	
+	public boolean isFollowing(ArrayList<Player> followers)
+	{
+		for(int i = 0; i < followers.size(); i++)
+		{
+			if(getId() == followers.get(i).getId()) return true;
+		}
+		
+		return false;
 	}
 	
 }

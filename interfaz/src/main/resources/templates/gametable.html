@@ -1,4 +1,4 @@
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
 <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -36,7 +36,7 @@
 										</td>
 										<td>
 											<span class="star">
-												<input type="checkbox" th:id="star + ${game.id}" th:checked="${game.isFavouriteGame(favouriteGames)}">
+												<input type="checkbox" th:id="star + ${game.id}" th:checked="${game.isFavouriteGame(favouriteGames)}" th:onclick="'updateFavourite(\'star\' , \'' + ${game.id} + '\');'">
 												<label th:for="star + ${game.id}">
 													<i class="glyphicon glyphicon-star" ></i>
 												</label>

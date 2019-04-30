@@ -2,7 +2,7 @@
 <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<script th:src="@{/js/playerTable.js}"/></script>
+<script th:src="@{/js/gameTable.js}"/></script>
 <!------ Include the above in your HEAD tag ---------->
 
 <div th:replace="/includes/header :: header"> </div>
@@ -36,7 +36,7 @@
 										</td>
 										<td>
 											<span class="heart">
-												<input type="checkbox" th:id="heart + ${player.id}" th:checked="${player.isFollowing(followingPeople)}">
+												<input type="checkbox" th:id="heart + ${player.id}" th:checked="${player.isFollowing(followingPeople)}" th:onclick="'updateFollow(\'heart\' , \'' + ${player.id} + '\');'">
 												<label th:for="heart + ${player.id}">
 													<i class="glyphicon glyphicon-heart" ></i>
 												</label>

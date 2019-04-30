@@ -64,4 +64,10 @@ public class InterfazController
 		
 		return "gameCreation";	
 	}
+	
+	@RequestMapping("/asdaf")
+	public void testo()
+	{
+		System.out.println("Auch!");
+	}
 }

@@ -20,38 +20,22 @@
 
  });*/
 
-function updateFavourite(checkIdName, gameId)
-{
-	 if($('#' + checkIdName + gameId).is(':checked'))
-         $.post('http://localhost:8083/players/1/games/?id=' + gameId);
-     else
-    	 $.ajax({
-    		    url: 'http://localhost:8083/players/1/games/' + gameId,
-    		    method: 'DELETE',
-    		    success: function(result) {
-    		        // Do something with the result
-    		    }
-    		});
-};
-
-function updateFollow(checkIdName, playerId)
-{
-	 if($('#' + checkIdName + playerId).is(':checked'))
-         $.post('http://localhost:8084/players/1/followers/?id=' + playerId);
-     else
-    	 $.ajax({
-    		    url: 'http://localhost:8084/players/1/followers/' + playerId,
-    		    method: 'DELETE',
-    		    success: function(result) {
-    		        // Do something with the result
-    		    }
-    		});
-};
-
 function deletePlayer(playerId)
 {
 	 $.ajax({
 		    url: 'http://localhost:8082/players/' + playerId,
+		    method: 'DELETE',
+		    success: function(result) {
+		    	location.reload();
+		    }
+		});
+    	
+};
+
+function deleteGame(gameId)
+{
+	 $.ajax({
+		    url: 'http://localhost:8081/games/' + gameId,
 		    method: 'DELETE',
 		    success: function(result) {
 		    	location.reload();

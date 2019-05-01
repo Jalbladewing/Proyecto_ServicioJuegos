@@ -26,7 +26,7 @@
 							<table class="table table-filter">
 								<tbody>
 									<th:block th:each="player : ${players}">
-									<tr th:data-status="${player.isFollowing(followingPeople)} ? 'siguiendo' : 'sinSeguir'">
+									<tr>
 										<td>
 											<div class="ckbox">
 												<input type="checkbox" th:id="checkbox + ${player.id}">
@@ -35,8 +35,8 @@
 										</td>
 										<td>
 											<span class="heart">
-												<input type="checkbox" th:id="heart + ${player.id}" th:checked="${player.isFollowing(followingPeople)}" th:onclick="'updateFollow(\'heart\' , \'' + ${player.id} + '\');'">
-												<label th:for="heart + ${player.id}">
+												<input type="checkbox">
+												<label>
 													<i class="glyphicon glyphicon-heart" ></i>
 												</label>
 											</span>

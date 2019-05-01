@@ -32,4 +32,10 @@ $(document).ready( function() {
 		$("#imgInp").change(function(){
 		    readURL(this);
 		}); 	
+		
+		
+		 $('#myForm').submit(function(){
+		    $.post('http://localhost:8081/games', $("#myForm").serialize());
+		    alert("");
+		  });
 	});

@@ -26,7 +26,7 @@
 							<table class="table table-filter">
 								<tbody>
 									<th:block th:each="game : ${games}">
-									<tr th:data-status="${game.isFavouriteGame(favouriteGames)} ? 'favorito' : 'nofavorito'">
+									<tr>
 										<td>
 											<div class="ckbox">
 												<input type="checkbox" th:id="checkbox + ${game.id}">
@@ -35,8 +35,8 @@
 										</td>
 										<td>
 											<span class="star">
-												<input type="checkbox" th:id="star + ${game.id}" th:checked="${game.isFavouriteGame(favouriteGames)}" th:onclick="'updateFavourite(\'star\' , \'' + ${game.id} + '\');'">
-												<label th:for="star + ${game.id}">
+												<input type="checkbox">
+												<label>
 													<i class="glyphicon glyphicon-star" ></i>
 												</label>
 											</span>
@@ -55,6 +55,9 @@
 													<p class="summary" th:text="${game.description}">...</p>
 												</div>
 											</div>
+										</td>
+										<td class="pull-right">
+											<button type="button" class="btn btn-danger" th:onclick="'deleteGame(\'' + ${game.id} + '\');'"><i class="glyphicon glyphicon-trash"></i></button>
 										</td>
 									</tr>
 									</th:block>

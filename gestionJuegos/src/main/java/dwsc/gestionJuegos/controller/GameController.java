@@ -148,17 +148,6 @@ public class GameController
 	
 	
 
-	//Creación de juegos, devuelve 200 siempre.
-	@RequestMapping("/gamecreation")
-	public String getGameCreation(Map<String, List<Game>> model) 
-	{
-		ArrayList<Game> games = new ArrayList<Game>(gameRepo.findAll());
-		model.put("games", games);
-		
-		return "gamecreation";
-	}
-	
-	
 	@PostMapping("/addGame")
 	public String addGame(Game game, Map<String, List<Game>> model/*, @RequestParam("imageFile") MultipartFile file*/) 
 	{

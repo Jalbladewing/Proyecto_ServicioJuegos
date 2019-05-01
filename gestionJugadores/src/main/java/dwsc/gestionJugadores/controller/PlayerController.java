@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import dwsc.gestionJugadores.domain.Player;
 import dwsc.gestionJugadores.repository.PlayerRepository;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public class PlayerController 
 {
@@ -157,41 +159,8 @@ public class PlayerController
 	
 	
 	
-	@RequestMapping("/playerstable")
-	public String getPlayersTab(Map<String, List<Player>> model) 
-	{
-		ArrayList<Player> players = new ArrayList<Player>(playerRepo.findAll());
-		model.put("players", players);
-		
-		return "playerTable";
-	}
 	
-	@RequestMapping("/playercreation")
-	public String getPlayerCreation(Map<String, List<Player>> model) 
-	{
-		ArrayList<Player> players = new ArrayList<Player>(playerRepo.findAll());
-		model.put("players", players);
-		
-		return "playercreation";
-	}
 	
-	@PutMapping("/editPlayer")
-	public String editPlayer(Player player, Map<String, Player> model) 
-	{
-		try
-		{
-			playerRepo.save(player);
-			
-		}catch(Exception e)
-		{
-			//return new ResponseEntity<String>("gameTable", HttpStatus.ACCEPTED);
-			//return "gameTable";
-		}
-		
-		model.put("player", player);
-		//return new ResponseEntity<Game>(game, HttpStatus.CREATED);
-        return "playercreation";
-	}
 	
 	@DeleteMapping("/deletePlayer/")
 	public String deletePlayer(Player player, Map<String, List<Player>> model) 

@@ -48,6 +48,18 @@ function updateFollow(checkIdName, playerId)
     		});
 };
 
+function deletePlayer(playerId)
+{
+	 $.ajax({
+		    url: 'http://localhost:8082/players/' + playerId,
+		    method: 'DELETE',
+		    success: function(result) {
+		    	location.reload();
+		    }
+		});
+    	
+};
+
 $(document).ready(function () {
     $('.btn-filter').on('click', function () {
       var $target = $(this).data('target');

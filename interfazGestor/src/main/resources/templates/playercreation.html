@@ -10,41 +10,42 @@
 <div class="container">
 <div class="card bg-light">
 <article class="card-body mx-auto" style="max-width: 400px;">
-	<h4 class="card-title mt-3 text-center">Crear Jugador</h4>
+	<h4 class="card-title mt-3 text-center" th:text="${player.id} ? 'Editar Jugador' : 'Crear Jugador'"></h4>
 	<p class="divider-text">
         <span></span>
     </p>
-	<form id="myForm" action="/playerList" method="post" enctype="multipart/form-data" >
+	<form th:id="${player.id} ? 'myFormEdit' : 'myFormAdd'" action="/playerList" method="post" enctype="multipart/form-data" >
+	<input type="hidden" id="playerId" th:value="${player.id}">
 	<div class="form-group input-group">
 		<div class="input-group-prepend">
 		    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
 		 </div>
-        <input name="name" class="form-control input-text" placeholder="Nombre" type="text">
+        <input name="name" class="form-control input-text" placeholder="Nombre" type="text" th:value='${player.name}'>
     </div> <!-- form-group// -->
     
     <div class="form-group input-group">
 		<div class="input-group-prepend">
 		    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
 		 </div>
-        <input name="lastname" class="form-control input-text" placeholder="Apellido" type="text">
+        <input name="lastname" class="form-control input-text" placeholder="Apellido" type="text" th:value='${player.lastname}'>
     </div> <!-- form-group// -->
     
     <div class="form-group input-group">
 		<div class="input-group-prepend">
 		    <span class="input-group-text"> <i class="fa fa-calendar"></i> </span>
 		 </div>
-        <input name="age" class="form-control input-text" placeholder="Edad" type="number">
+        <input name="age" class="form-control input-text" placeholder="Edad" type="number" th:value=${player.age}>
     </div> <!-- form-group// -->
     
     <div class="form-group input-group">
 		<div class="input-group-prepend">
 		    <span class="input-group-text"> <i class="fa fa-id-card"></i> </span>
 		 </div>
-        <input name="dni" class="form-control input-text" placeholder="DNI" type="text">
+        <input name="dni" class="form-control input-text" placeholder="DNI" type="text" th:value='${player.dni}'>
     </div> <!-- form-group// -->
                                        
     <div class="form-group">
-        <button type="submit" class="btn btn-primary btn-block"> Crear Jugador  </button>
+        <button type="submit" class="btn btn-primary btn-block" th:text="${player.id} ? 'Editar Jugador' : 'Crear Jugador'" onclick="sendForm(event);"> </button>
     </div> <!-- form-group// -->                                                                    
 </form>
 </article>

@@ -41,7 +41,7 @@
 												</label>
 											</span>
 										</td>
-										<td>
+										<td style="width: 69.7%;">
 											<div class="media">
 												<a href="#" class="pull-left">
 													<img th:src="@{'/images/' + ${game.url}}" class="media-photo">
@@ -57,6 +57,7 @@
 											</div>
 										</td>
 										<td class="pull-right">
+											<a th:href="'/editGame/' + ${game.id}"><button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></button></a>
 											<button type="button" class="btn btn-danger" th:onclick="'deleteGame(\'' + ${game.id} + '\');'"><i class="glyphicon glyphicon-trash"></i></button>
 										</td>
 									</tr>

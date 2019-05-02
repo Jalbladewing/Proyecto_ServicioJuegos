@@ -11,16 +11,17 @@
 <div class="container">
 <div class="card bg-light">
 <article class="card-body mx-auto" style="max-width: 400px;">
-	<h4 class="card-title mt-3 text-center">Crear juego</h4>
+	<h4 class="card-title mt-3 text-center"  th:text="${game.id} ? 'Editar Juego' : 'Crear Juego'"></h4>
 	<p class="divider-text">
         <span></span>
     </p>
-	<form id="myForm" action="/gameList" method="post" enctype="multipart/form-data">
+	<form th:id="${game.id} ? 'myFormEdit' : 'myFormAdd'" action="/gameList" method="post" enctype="multipart/form-data">
+	<input type="hidden" id="gameId" th:value="${game.id}">
 	<div class="form-group input-group">
 		<div class="input-group-prepend">
 		    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
 		 </div>
-        <input name="name" class="form-control input-text" placeholder="Titulo" type="text">
+        <input name="name" class="form-control input-text" placeholder="Titulo" type="text" th:value='${game.name}'>
     </div> <!-- form-group// -->
     
     <div class="form-group">
@@ -30,7 +31,7 @@
                     Browse… <input type="file" name="imageFile" id="imgInp" placeholder="Subir imagen">
                 </span>
             </span>
-            <input name="url" type="text" class="form-control" readonly>
+            <input name="url" type="text" class="form-control" th:value='${game.url}' readonly>
         </div>
         <img name="fileImage" id='img-upload'/>
     </div>
@@ -39,11 +40,11 @@
     	<div class="input-group-prepend">
 		    <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
 		 </div>
-        <textarea name="description" class="form-control" placeholder="Descripcion"></textarea>
+        <textarea name="description" class="form-control" placeholder="Descripcion" th:text='${game.description}'></textarea>
     </div> <!-- form-group// -->
                                        
     <div class="form-group">
-        <button type="submit" class="btn btn-primary btn-block"> Crear Juego  </button>
+        <button type="submit" class="btn btn-primary btn-block" th:text="${game.id} ? 'Editar Juego' : 'Crear Juego'" onclick="sendForm(event);"> </button>
     </div> <!-- form-group// -->                                                                    
 </form>
 </article>

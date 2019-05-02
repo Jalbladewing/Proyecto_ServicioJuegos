@@ -1,3 +1,26 @@
+function sendForm(evt) 
+{ 
+	evt.preventDefault();
+	var playerId = document.getElementById("gameId").value;
+	
+	if(playerId == 0)
+	{
+		$.post('http://localhost:8081/games', $("#myFormAdd").serialize(), function() {
+			location.href = "/gameList";
+		});
+	}else
+	{
+		$.ajax({
+		    url: 'http://localhost:8081/games/' + document.getElementById("gameId").value,
+		    data: $("#myFormEdit").serialize(),
+		    method: 'PUT',
+		    success: function(result) {
+		    	location.href = "/gameList";
+		    }
+		});
+	}
+}
+
 $(document).ready( function() {
     	$(document).on('change', '.btn-file :file', function() {
 		var input = $(this),
@@ -33,9 +56,4 @@ $(document).ready( function() {
 		    readURL(this);
 		}); 	
 		
-		
-		 $('#myForm').submit(function(){
-		    $.post('http://localhost:8081/games', $("#myForm").serialize());
-		    alert("");
-		  });
 	});

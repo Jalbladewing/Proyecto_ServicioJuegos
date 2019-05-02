@@ -38,7 +38,7 @@ public class Player
 			  joinColumns = @JoinColumn(name = "Player_id"), 
 			  inverseJoinColumns = @JoinColumn(name = "Game_id"))
 	private Set<Game> favouriteGames;
-	
+
 	public int getId() 
 	{
 		return id;

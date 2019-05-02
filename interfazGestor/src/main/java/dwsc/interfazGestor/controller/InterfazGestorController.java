@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
@@ -55,19 +56,44 @@ public class InterfazGestorController
 	 **********************************************************/
 	
 	@RequestMapping("/addPlayer")
-	public String editPlayer(Map<String, List<Player>> model) 
+	public String addPlayer(Map<String, Player> model) 
 	{
-		ArrayList<Player> players = new ArrayList<Player>(Arrays.asList((new RestTemplate()).getForEntity(gestionJugadoresUrl + "/players", Player[].class).getBody()));
-		model.put("players", players);
+		Player player = new Player();
+		model.put("player", player);
 		
 		return "playercreation";
 	}
 	
 	@RequestMapping("/addGame")
-	public String addGame(Map<String, List<Game>> model)
+	public String addGame(Map<String, Game> model)
 	{
-		ArrayList<Game> games = new ArrayList<Game>(Arrays.asList((new RestTemplate()).getForEntity(gestionJuegosUrl + "/games", Game[].class).getBody()));
-		model.put("games", games);
+		Game game = new Game();
+		model.put("game", game);
+		
+		return "gameCreation";	
+	}
+	
+	
+	/**********************************************************
+	 **********************************************************
+	 ******************PÁGINAS DE EDITAR***********************
+	 **********************************************************
+	 **********************************************************/
+	
+	@RequestMapping("/editPlayer/{id}")
+	public String editPlayer(Map<String, Player> model, @PathVariable int id) 
+	{
+		Player player = (new RestTemplate()).getForEntity(gestionJugadoresUrl + "/players/" + id, Player.class).getBody();
+		model.put("player", player);
+		
+		return "playercreation";
+	}
+	
+	@RequestMapping("/editGame/{id}")
+	public String editGame(Map<String, Game> model, @PathVariable int id)
+	{
+		Game game = (new RestTemplate()).getForEntity(gestionJuegosUrl + "/games/" + id, Game.class).getBody();
+		model.put("game", game);
 		
 		return "gameCreation";	
 	}

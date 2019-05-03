@@ -15,6 +15,6 @@
   </servlet>
   <servlet-mapping>
      <servlet-name>Servlet News</servlet-name>
-     <url-pattern>/servlet</url-pattern>
+     <url-pattern>/news</url-pattern>
   </servlet-mapping>
 </web-app>

@@ -39,7 +39,7 @@ public class ServletNews extends HttpServlet {
     	   {
     		   getreference();
 
-    		   if (request.getParameter("action").compareTo(" Leer noticia ") == 0)
+    		   /*if (request.getParameter("action").compareTo(" Leer noticia ") == 0)
     		   {
     			   
     			   if(bufferImpl.get(aux))
@@ -67,7 +67,23 @@ public class ServletNews extends HttpServlet {
       				{
       					out.println("No hay noticias disponibles");
       				}
-    		   }   
+    		   }   */
+    		   
+    		   /*if(bufferImpl.read(aux))
+ 				{
+ 					
+ 					List<Noticia> listaNoticias = XMLCoder.decodeXML("noticias");
+ 					out.println(listaNoticias.get(0).toString() +"<br>");
+ 	               
+ 				}else
+ 				{
+ 					out.println("No hay noticias disponibles");
+ 				}*/
+    		   
+    		   List<Noticia> noticias = XMLCoder.decodeXML("noticias");
+    		   RequestDispatcher dispatcher = request.getRequestDispatcher("playerNews.jsp");
+    		   request.setAttribute("noticias", noticias); // set your String value in the attribute
+    		   dispatcher.forward( request, response );
 			
     	   } catch (Exception e) 
     	   {

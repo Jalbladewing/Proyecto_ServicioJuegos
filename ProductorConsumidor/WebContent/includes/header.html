@@ -1,4 +1,4 @@
-<div th:fragment="header">
+<div>
 	<nav class="navbar navbar-default navbar-static-top" role="navigation">
 	  <div class="container-fluid">
 	    <!-- Brand and toggle get grouped for better mobile display -->
@@ -9,15 +9,15 @@
 	        <span class="icon-bar"></span>
 	        <span class="icon-bar"></span>
 	      </button>
-	      <a class="navbar-brand" href="/">Brand</a>
+	      <a class="navbar-brand" href="/ProductorConsumidor/news">Brand</a>
 	    </div>
 	
 	    <!-- Collect the nav links, forms, and other content for toggling -->
 	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	      <ul class="nav navbar-nav">
-	        <li><a href="/">Inicio</a></li>
-	        <li><a href="/gameList">Juegos</a></li>
-	        <li><a href="/playerList">Jugadores</a></li>
+	        <li><a href="/ProductorConsumidor/news">Inicio</a></li>
+	        <li><a href="http://localhost:8079/gameList">Juegos</a></li>
+	        <li><a href="http://localhost:8079/playerList">Jugadores</a></li>
 	      </ul>
 	      <ul class="nav navbar-nav navbar-right">
 	        <li class="dropdown">
@@ -59,7 +59,7 @@
 	                        </li>
 	                    </ul>
 	                </li>
-	                <li><img class="img-circle" th:src="@{'/images/user.jpg'}"></li>
+	                <li><img class="img-circle"  src="images/user.jpg"></li>
 	      </ul>
 	    </div><!-- /.navbar-collapse -->
 	  </div><!-- /.container-fluid -->

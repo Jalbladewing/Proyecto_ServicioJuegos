@@ -22,11 +22,18 @@ public class InterfazGestorController
 	private static String asignarJuegosUrl = "http://localhost:8083";
 	private static String asignarSeguidoresUrl = "http://localhost:8084";
 	
+	
 	/**********************************************************
 	 **********************************************************
 	 ******************PÁGINAS DE LISTAR***********************
 	 **********************************************************
 	 **********************************************************/
+	
+	@RequestMapping("/")
+	public String gameList()
+	{
+		return "redirect:" + "/gameList";
+	}
 	
 	@RequestMapping("/gameList")
 	public String gameList(Map<String, List<Game>> gameModel, Map<String, List<Game>> favouriteGamesModel)

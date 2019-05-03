@@ -59,11 +59,11 @@ public class GameController
 	
 	//Juego especifico devuelve 200 o 404 (NOT FOUND)
 	@GetMapping("/games/name/{name}")
-	public ResponseEntity<Game> findGameByName(@PathVariable String name)
+	public ResponseEntity<List<Game>> findGameByName(@PathVariable String name)
 	{
-		Game game = gameRepo.findByName(name);
+		ArrayList<Game> game = new ArrayList<Game>(gameRepo.findByName(name));
 		
-		if(game != null)
+		if(!game.isEmpty())
 		{
 			return ResponseEntity.ok(game);
 		}else

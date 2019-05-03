@@ -63,7 +63,7 @@ public class PlayerController
 		
 	}
 	
-	/*@GetMapping("/players/{name}")
+	@GetMapping("/players/name/{name}")
 	public ResponseEntity<List<Player>> findPlayerByName(@PathVariable String name)
 	{
 		ArrayList<Player> player = new ArrayList<Player>(playerRepo.findByName(name));
@@ -76,10 +76,40 @@ public class PlayerController
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 		
-	}*/
+	}
 	
-	/*@RequestMapping("/player/{dni}")
-	public ResponseEntity<Player> findPlayerByDNI(@PathVariable String dni)
+	@GetMapping("/players/lastname/{lastname}")
+	public ResponseEntity<List<Player>> findPlayerByLastname(@PathVariable String lastname)
+	{
+		ArrayList<Player> player = new ArrayList<Player>(playerRepo.findByLastname(lastname));
+		
+		if(!player.isEmpty())
+		{
+			return ResponseEntity.ok(player);
+		}else
+		{
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+		
+	}
+	
+	@GetMapping("/players/age/{age}")
+	public ResponseEntity<List<Player>> findPlayerByAge(@PathVariable int age)
+	{
+		ArrayList<Player> player = new ArrayList<Player>(playerRepo.findByAge(age));
+		
+		if(!player.isEmpty())
+		{
+			return ResponseEntity.ok(player);
+		}else
+		{
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+		
+	}
+	
+	@GetMapping("/players/dni/{dni}")
+	public ResponseEntity<Player> findPlayerByDni(@PathVariable String dni)
 	{
 		Player player = playerRepo.findByDni(dni);
 		
@@ -91,7 +121,8 @@ public class PlayerController
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 		
-	}*/
+	}
+	
 	
 	@PostMapping("/players")
 	public ResponseEntity<Player> addPlayer(Player player) 

@@ -13,6 +13,8 @@ import dwsc.gestionJugadores.domain.Player;
 public interface PlayerRepository extends JpaRepository<Player, Integer> 
 {
 	List<Player> findByName(@Param("name") String name);
+	List<Player> findByLastname(@Param("lastname") String lastname);
+	List<Player> findByAge(@Param("age") int age);
 	
 	Player findByDni(@Param("dni") String dni);
 }

@@ -27,7 +27,7 @@ public class InterfazController
 	private static String asignarSeguidoresUrl = "http://localhost:8084";
 	
 	@RequestMapping("/")
-	public String gameList()
+	public String home()
 	{
 		return "redirect:" + "http://localhost:8080/ProductorConsumidor/news";
 	}

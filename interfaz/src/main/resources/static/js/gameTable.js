@@ -48,6 +48,43 @@ function updateFollow(checkIdName, playerId)
     		});
 };
 
+function searchPlayer(evt)
+{
+	evt.preventDefault();
+	var prefix = $('input[name=searchRadio]:checked').val();
+	var searchInput = $("#searchInput").val();
+	
+	if(prefix == "nameRadio")
+	{
+		location.href = "/playerList/name/" + searchInput;
+		
+	}else if(prefix == "lastnameRadio")
+	{
+		location.href = "/playerList/lastname/" + searchInput;
+		
+	}else if(prefix == "ageRadio")
+	{
+		location.href = "/playerList/age/" + searchInput;
+		
+	}else //DNI
+	{
+		location.href = "/playerList/dni/" + searchInput;
+	}
+}
+
+function searchGame(evt)
+{
+	evt.preventDefault();
+	var prefix = $('input[name=searchRadio]:checked').val();
+	var searchInput = $("#searchInput").val();
+	
+	if(prefix == "nameRadio")
+	{
+		location.href = "/gameList/name/" + searchInput;
+	}
+}
+
+
 $(document).ready(function () {
     $('.btn-filter').on('click', function () {
       var $target = $(this).data('target');

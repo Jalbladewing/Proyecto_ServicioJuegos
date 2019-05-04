@@ -21,6 +21,12 @@ body {
 /*	--------------------------------------------------
 	:: Table Filter
 	-------------------------------------------------- */
+.head-search {
+	display: inline-block;
+	width: auto;
+	vertical-align: middle;
+}
+	
 .panel {
 	border: 1px solid #ddd;
 	background-color: #fcfcfc;

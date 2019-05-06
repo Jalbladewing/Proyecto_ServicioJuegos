@@ -34,6 +34,15 @@
 										<tbody>
 											<%
 												  ArrayList<Noticia> noticias = (ArrayList<Noticia>) request.getAttribute("noticias"); 
+													
+												  if(noticias.isEmpty())
+												  {
+											%>
+											<div class="alert alert-danger" role="alert">
+												No hay noticias disponibles
+											</div>
+											<%
+												  }
 												  for (Noticia noticia: noticias) {   
 											%>
 											<tr>

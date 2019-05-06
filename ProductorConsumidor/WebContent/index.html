@@ -13,6 +13,7 @@
     <body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
        alink="#990000" link="#043a66" vlink="#999900">
        <dl class="card bg-light card-body mx-auto" style="max-width: 400px;">
+       	 <div id="mensajeCreacion" class="alert alert-success" style="display:none;" role="alert"> Noticia creada con exito.</div>
           <table nosave="" border="0" cellspacing="5" width="98%">
              <tbody>
               <tr nosave="" valign="top">
@@ -33,25 +34,23 @@
                      
                      <div class="form-group input-group">
 						<div class="input-group-prepend">
-						    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+						    <span class="input-group-text"> <i class="fas fa-pencil-alt"></i> </span>
 						 </div>
 				        <input name="shortDescription" class="form-control" placeholder="Descripción Corta" type="text">
 				     </div>
 				     
-                     <p>
-                     	<font face="Arial,Helvetica"><font size="-1">Descripción Larga</font></font>
-                     </p>
-                     <p>
-                     	<div class="md-form">
-					       <i class="fas fa-pencil-alt prefix grey-text"></i>
-					       <textarea name="XMLtemplate" class="md-textarea form-control" rows="5"></textarea>
-					    </div>
-                     </p>
+				     <div class="form-group input-group">
+				    	<div class="input-group-prepend">
+						    <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+						 </div>
+				        <textarea name="XMLtemplate" class="form-control" placeholder="Descripción Larga"></textarea>
+				    </div> <!-- form-group// -->
+
                      <p>
                      	<input class="btn btn-primary btn-block" value=" Crear noticia " alt="Pulsa el botón para añadir una noticia" type="submit"> 
-                     	<input class="btn btn-primary btn-block" value=" Previsualizar noticia " alt="Pulsa el botón para previsualizar una noticia" name='action' type="submit" formmethod="get">
-                     	<input class="btn btn-primary btn-block" value=" Leer noticia " alt="Pulsa el botón para leer una noticia" name='action' type="submit" formmethod="get"> 
-                     	<input class="btn btn-primary btn-block" value=" Nueva noticia " type="reset">
+                     	<!-- <input class="btn btn-primary btn-block" value=" Previsualizar noticia " alt="Pulsa el botón para previsualizar una noticia" name='action' type="submit" formmethod="get"> 
+                     	<input class="btn btn-primary btn-block" value=" Leer noticia " alt="Pulsa el botón para leer una noticia" name='action' type="submit" formmethod="get">  -->
+                     	<button class="btn btn-secondary btn-block" type="reset"><i class="fa fa-eraser"></i> Limpiar campos</button>
                      </p>
                   </center>
                 </form>

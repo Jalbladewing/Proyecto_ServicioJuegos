@@ -30,7 +30,7 @@ public class InterfazGestorController
 	 **********************************************************/
 	
 	@RequestMapping("/")
-	public String gameList()
+	public String home()
 	{
 		return "redirect:" + "/gameList";
 	}
@@ -38,8 +38,18 @@ public class InterfazGestorController
 	@RequestMapping("/gameList")
 	public String gameList(Map<String, List<Game>> gameModel, Map<String, List<Game>> favouriteGamesModel)
 	{
-		ArrayList<Game> games = new ArrayList<Game>(Arrays.asList((new RestTemplate()).getForEntity(gestionJuegosUrl + "/games", Game[].class).getBody()));
-		ArrayList<Game> favouriteGames = new ArrayList<Game>(Arrays.asList((new RestTemplate()).getForEntity(asignarJuegosUrl + "players/1/games", Game[].class).getBody()));
+		ArrayList<Game> games = new ArrayList<Game>();
+		ArrayList<Game> favouriteGames = new ArrayList<Game>();
+		try 
+		{
+			games.addAll(new ArrayList<Game>(Arrays.asList((new RestTemplate()).getForEntity(gestionJuegosUrl + "/games", Game[].class).getBody())));
+			favouriteGames.addAll(new ArrayList<Game>(Arrays.asList((new RestTemplate()).getForEntity(asignarJuegosUrl + "players/1/games", Game[].class).getBody())));
+			
+		}catch(Exception e)
+		{
+			System.out.println(e);
+		}
+
 		gameModel.put("games", games);
 		favouriteGamesModel.put("favouriteGames", favouriteGames);
 		return "gametable";	
@@ -48,8 +58,19 @@ public class InterfazGestorController
 	@RequestMapping("/playerList")
 	public String playerList(Map<String, List<Player>> playerModel, Map<String, List<Player>> followingModel) 
 	{
-		ArrayList<Player> players = new ArrayList<Player>(Arrays.asList((new RestTemplate()).getForEntity(gestionJugadoresUrl + "/players", Player[].class).getBody()));
-		ArrayList<Player> followingPeople = new ArrayList<Player>(Arrays.asList((new RestTemplate()).getForEntity(asignarSeguidoresUrl + "players/1/followed", Player[].class).getBody()));
+		ArrayList<Player> players = new ArrayList<Player>();
+		ArrayList<Player> followingPeople = new ArrayList<Player>();
+		
+		try 
+		{
+			players.addAll(new ArrayList<Player>(Arrays.asList((new RestTemplate()).getForEntity(gestionJugadoresUrl + "/players", Player[].class).getBody())));
+			followingPeople.addAll(new ArrayList<Player>(Arrays.asList((new RestTemplate()).getForEntity(asignarSeguidoresUrl + "players/1/followed", Player[].class).getBody())));
+			
+		}catch(Exception e)
+		{
+			System.out.println(e);
+		}
+		
 		playerModel.put("players", players);
 		followingModel.put("followingPeople", followingPeople);
 		

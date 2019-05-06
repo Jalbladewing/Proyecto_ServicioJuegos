@@ -15,13 +15,14 @@
 	<p class="divider-text">
         <span></span>
     </p>
+    <div id="mensajeEdicion" class="alert alert-success" style="display:none;" role="alert"> Juego editado con éxito </div>
 	<form th:id="${game.id} ? 'myFormEdit' : 'myFormAdd'" action="/gameList" method="post" enctype="multipart/form-data">
 	<input type="hidden" id="gameId" th:value="${game.id}">
 	<div class="form-group input-group">
 		<div class="input-group-prepend">
 		    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
 		 </div>
-        <input name="name" class="form-control input-text" placeholder="Titulo" type="text" th:value='${game.name}'>
+        <input id="nameInput" name="name" class="form-control input-text" placeholder="Titulo" type="text" th:value='${game.name}'>
     </div> <!-- form-group// -->
     
     <div class="form-group">

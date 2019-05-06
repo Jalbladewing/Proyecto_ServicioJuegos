@@ -15,6 +15,7 @@
 			<div class="col-md-8 col-md-offset-2">
 				<div class="panel panel-default">
 					<div class="panel-body">
+						<div id="mensajeEliminacion" class="alert alert-success" style="display:none;" role="alert"> Jugador eliminado con éxito </div>
 						<div class="pull-right">
 							<div class="btn-group">
 								<button type="button" class="btn btn-danger btn-filter" data-target="siguiendo">Siguiendo</button>
@@ -25,6 +26,7 @@
 						<div class="table-container">
 							<table class="table table-filter">
 								<tbody>
+									<div th:if="${#lists.isEmpty(players)}" class="alert alert-danger" role="alert"> No se han encontrado jugadores que coincidan con los parámetros de búsqueda</div>
 									<th:block th:each="player : ${players}">
 									<tr>
 										<td>
@@ -58,7 +60,7 @@
 										</td>
 										<td class="pull-right">
 											<a th:href="'/editPlayer/' + ${player.id}"><button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></button></a>
-											<button type="button" class="btn btn-danger" th:onclick="'deletePlayer(\'' + ${player.id} + '\');'"><i class="glyphicon glyphicon-trash"></i></button>
+											<button type="button" th:id="delete + ${player.id}" class="btn btn-danger" th:onclick="'deletePlayer(\'' + ${player.id} + '\');'"><i class="glyphicon glyphicon-trash"></i></button>
 										</td>
 									</tr>
 									</th:block>

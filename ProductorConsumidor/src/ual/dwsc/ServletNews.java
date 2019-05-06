@@ -87,12 +87,21 @@ public class ServletNews extends HttpServlet {
 			
     	   } catch (Exception e) 
     	   {
+    		   List<Noticia> noticias = new ArrayList<Noticia>();
+    		   RequestDispatcher dispatcher = request.getRequestDispatcher("playerNews.jsp");
+    		   request.setAttribute("noticias", noticias); // set your String value in the attribute
+    		   dispatcher.forward( request, response );
     		   
     		   out.println("Error al obtener la noticia");
     	   }
     	      
        }else
        {
+    	   List<Noticia> noticias = new ArrayList<Noticia>();
+		   RequestDispatcher dispatcher = request.getRequestDispatcher("playerNews.jsp");
+		   request.setAttribute("noticias", noticias); // set your String value in the attribute
+		   dispatcher.forward( request, response );
+		   
     	   out.println("Error en la validación del documento");
        }
 

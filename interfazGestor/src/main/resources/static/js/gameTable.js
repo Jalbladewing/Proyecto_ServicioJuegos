@@ -26,7 +26,9 @@ function deletePlayer(playerId)
 		    url: 'http://localhost:8082/players/' + playerId,
 		    method: 'DELETE',
 		    success: function(result) {
-		    	location.reload();
+		    	$("#delete" +  playerId).parents('tr').remove();
+		    	document.getElementById("mensajeEliminacion").innerHTML = "Jugador con ID " + playerId + " eliminado con éxito.";
+		    	document.getElementById("mensajeEliminacion").style.display = "block"; 
 		    }
 		});
     	
@@ -38,7 +40,9 @@ function deleteGame(gameId)
 		    url: 'http://localhost:8081/games/' + gameId,
 		    method: 'DELETE',
 		    success: function(result) {
-		    	location.reload();
+		    	$("#delete" +  gameId).parents('tr').remove();
+		    	document.getElementById("mensajeEliminacion").innerHTML = "Juego con ID " + gameId + " eliminado con éxito.";
+		    	document.getElementById("mensajeEliminacion").style.display = "block"; 
 		    }
 		});
     	

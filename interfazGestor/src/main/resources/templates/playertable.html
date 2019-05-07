@@ -15,7 +15,7 @@
 			<div class="col-md-8 col-md-offset-2">
 				<div class="panel panel-default">
 					<div class="panel-body">
-						<div id="mensajeEliminacion" class="alert alert-success" style="display:none;" role="alert"> Jugador eliminado con éxito </div>
+						<div id="mensajeEliminacion" class="alert alert-success" style="display:none;" role="alert"> Jugador eliminado con exito </div>
 						<div class="pull-right">
 							<div class="btn-group">
 								<button type="button" class="btn btn-danger btn-filter" data-target="siguiendo">Siguiendo</button>
@@ -26,7 +26,7 @@
 						<div class="table-container">
 							<table class="table table-filter">
 								<tbody>
-									<div th:if="${#lists.isEmpty(players)}" class="alert alert-danger" role="alert"> No se han encontrado jugadores que coincidan con los parámetros de búsqueda</div>
+									<div th:if="${#lists.isEmpty(players)}" class="alert alert-danger" role="alert"> No se han encontrado jugadores que coincidan con los parametros de busqueda</div>
 									<th:block th:each="player : ${players}">
 									<tr>
 										<td>
@@ -54,7 +54,7 @@
 														...
 														<span class="pull-right pagado">(Pagado)</span>
 													</h4>
-													<p class="summary" th:text="${player.age}">...</p>
+													<p class="summary" th:text="'Edad: ' + ${player.age} + '.  DNI: ' + ${player.dni}">...</p>
 												</div>
 											</div>
 										</td>

@@ -107,6 +107,12 @@ body {
 	max-height: 50px;
 	margin-top: 19%;
 }
+
+.table-filter .media-body-player {
+    display: block !important;
+    /* Had to use this style to force the div to expand (wasn't necessary with my bootstrap version 3.3.6) */
+}
+
 .table-filter .media-body {
     /*display: block;*/
     /* Had to use this style to force the div to expand (wasn't necessary with my bootstrap version 3.3.6) */

@@ -130,8 +130,9 @@ public class ServletNews extends HttpServlet {
        {
     	   getreference();
 		
-    	   List noticias = XMLCoder.decodeXML("noticias");
-	       noticias.add(new Noticia(value_name1,value_name2, value_name3));
+    	   List<Noticia> noticias = XMLCoder.decodeXML("noticias");
+    	   Noticia nuevaNoticia = new Noticia(value_name1,value_name2, value_name3);
+	       noticias.add(nuevaNoticia);
 	       boolean estado = false;
 	       
 	       if(bufferImpl.canPut())
@@ -150,8 +151,11 @@ public class ServletNews extends HttpServlet {
 		           {
 		        	   if (!bufferImpl.put(noticias.get(noticias.size()-1).toString()))
 							throw new Exception("No se ha podido insertar el elemento en el buffer");
-
-						//nelementos = bufferImpl.getSize();
+	  
+		    		   RequestDispatcher dispatcher = request.getRequestDispatcher("adminNews.jsp");
+		    		   request.setAttribute("noticias", noticias); // set your String value in the attribute
+		    		   request.setAttribute("nuevaNoticia", nuevaNoticia);
+		    		   dispatcher.forward( request, response );
 			    	   
 				       /** Se genera la salida HTML para mostrar en el cliente */
 				       out.println("Se ha guardado la noticia " + value_name1 + " y se ha generado el XML correctamente");

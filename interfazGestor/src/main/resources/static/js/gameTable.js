@@ -27,7 +27,7 @@ function deletePlayer(playerId)
 		    method: 'DELETE',
 		    success: function(result) {
 		    	$("#delete" +  playerId).parents('tr').remove();
-		    	document.getElementById("mensajeEliminacion").innerHTML = "Jugador con ID " + playerId + " eliminado con éxito.";
+		    	document.getElementById("mensajeEliminacion").innerHTML = "Jugador con ID <strong>" + playerId + "</strong> eliminado con éxito.";
 		    	document.getElementById("mensajeEliminacion").style.display = "block"; 
 		    }
 		});
@@ -41,7 +41,7 @@ function deleteGame(gameId)
 		    method: 'DELETE',
 		    success: function(result) {
 		    	$("#delete" +  gameId).parents('tr').remove();
-		    	document.getElementById("mensajeEliminacion").innerHTML = "Juego con ID " + gameId + " eliminado con éxito.";
+		    	document.getElementById("mensajeEliminacion").innerHTML = "Juego con ID <strong>" + gameId + "</strong> eliminado con éxito.";
 		    	document.getElementById("mensajeEliminacion").style.display = "block"; 
 		    }
 		});

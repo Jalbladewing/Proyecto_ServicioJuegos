@@ -6,7 +6,7 @@ function sendForm(evt)
 	if(playerId == 0)
 	{
 		$.post('http://localhost:8081/games', $("#myFormAdd").serialize(), function() {
-			document.getElementById("mensajeEdicion").innerHTML = "Juego " + document.getElementById("nameInput").value + " creado con éxito.";
+			document.getElementById("mensajeEdicion").innerHTML = "Juego <strong>" + document.getElementById("nameInput").value + "</strong> creado con éxito.";
 	    	document.getElementById("mensajeEdicion").style.display = "block"; 
 		});
 	}else
@@ -16,7 +16,7 @@ function sendForm(evt)
 		    data: $("#myFormEdit").serialize(),
 		    method: 'PUT',
 		    success: function(result) {
-		    	document.getElementById("mensajeEdicion").innerHTML = "Juego " + document.getElementById("nameInput").value + " editado con éxito.";
+		    	document.getElementById("mensajeEdicion").innerHTML = "Juego <strong>" + document.getElementById("nameInput").value + "</strong> editado con éxito.";
 		    	document.getElementById("mensajeEdicion").style.display = "block"; 
 		    }
 		});

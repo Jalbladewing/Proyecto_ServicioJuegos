@@ -52,7 +52,7 @@
 						<div class="table-container">
 							<table class="table table-filter">
 								<tbody>
-									<div th:if="${#lists.isEmpty(players)}" class="alert alert-danger" role="alert"> No se han encontrado jugadores que coincidan con los parámetros de búsqueda</div>
+									<div th:if="${#lists.isEmpty(players)}" class="alert alert-danger" role="alert"> No se han encontrado jugadores que coincidan con los parametros de busqueda</div>
 									<th:block th:each="player : ${players}">
 									<tr th:data-status="${player.isFollowing(followingPeople)} ? 'siguiendo' : 'sinSeguir'">
 										<td>
@@ -74,13 +74,13 @@
 												<a href="#" class="pull-left">
 													<img th:src="@{'/images/user.jpg'}" class="media-photo">
 												</a>
-												<div class="media-body">
+												<div class="media-body-player">
 													<span class="media-meta pull-right">Febrero 13, 2016</span>
 													<h4 class="title" th:text="${player.name} + ' ' + ${player.lastname}">
 														...
 														<span class="pull-right pagado">(Pagado)</span>
 													</h4>
-													<p class="summary" th:text="${player.age}">...</p>
+													<p class="summary" th:text="'Edad: ' + ${player.age} + '.  DNI: ' + ${player.dni}">...</p>
 												</div>
 											</div>
 										</td>

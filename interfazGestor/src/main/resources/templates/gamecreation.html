@@ -1,8 +1,8 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<link th:href="@{/css/gamecreation.css}" rel="stylesheet">
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script th:src="@{/js/gamecreation.js}"></script>
+<script type="module" th:src="@{/js/game-creation-form.js}"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
 <!------ Include the above in your HEAD tag ---------->
 
@@ -10,46 +10,9 @@
 
 <div class="container">
 <div class="card bg-light">
-<article class="card-body mx-auto" style="max-width: 400px;">
-	<h4 class="card-title mt-3 text-center"  th:text="${game.id} ? 'Editar Juego' : 'Crear Juego'"></h4>
-	<p class="divider-text">
-        <span></span>
-    </p>
-    <div id="mensajeEdicion" class="alert alert-success" style="display:none;" role="alert"> Juego editado con éxito </div>
-	<form th:id="${game.id} ? 'myFormEdit' : 'myFormAdd'" action="/gameList" method="post" enctype="multipart/form-data">
-	<input type="hidden" id="gameId" th:value="${game.id}">
-	<div class="form-group input-group">
-		<div class="input-group-prepend">
-		    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
-		 </div>
-        <input id="nameInput" name="name" class="form-control input-text" placeholder="Titulo" type="text" th:value='${game.name}'>
-    </div> <!-- form-group// -->
-    
-    <div class="form-group">
-        <div class="input-group">
-            <span class="input-group-btn">
-                <span class="btn btn-default btn-file">
-                    Browse… <input type="file" name="imageFile" id="imgInp" placeholder="Subir imagen">
-                </span>
-            </span>
-            <input name="url" type="text" class="form-control" th:value='${game.url}' readonly>
-        </div>
-        <img name="fileImage" id='img-upload'/>
-    </div>
-    
-    <div class="form-group input-group">
-    	<div class="input-group-prepend">
-		    <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
-		 </div>
-        <textarea name="description" class="form-control" placeholder="Descripcion" th:text='${game.description}'></textarea>
-    </div> <!-- form-group// -->
-                                       
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary btn-block" th:text="${game.id} ? 'Editar Juego' : 'Crear Juego'" onclick="sendForm(event);"> </button>
-    </div> <!-- form-group// -->                                                                    
-</form>
-</article>
-</div> <!-- card.// -->
 
+<game-creation-form th:gameId="${game.id}" th:gameName="${game.name}" th:gameUrl="${game.url}" th:gameDescription="${game.description}"></game-creation-form>
+
+</div> <!-- card.// -->
 </div> 
 <!--container end.//-->

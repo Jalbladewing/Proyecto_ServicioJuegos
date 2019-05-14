@@ -2,11 +2,10 @@ function sendForm(evt)
 { 
 	evt.preventDefault();
 	var playerId = document.getElementById("gameId").value;
-	var formSerialized =  "name=" + document.getElementById("nameInput").value + "&" + "url=" + document.getElementById("urlInput").value + "&" + "description=" + document.getElementById("descriptionInput").value;
 	
 	if(playerId == 0)
 	{
-		$.post('http://localhost:8081/games', formSerialized, function() {
+		$.post('http://localhost:8081/games', $("#myFormAdd").serialize(), function() {
 			document.getElementById("mensajeEdicion").innerHTML = "Juego <strong>" + document.getElementById("nameInput").value + "</strong> creado con éxito.";
 	    	document.getElementById("mensajeEdicion").style.display = "block"; 
 		});
@@ -14,7 +13,7 @@ function sendForm(evt)
 	{
 		$.ajax({
 		    url: 'http://localhost:8081/games/' + document.getElementById("gameId").value,
-		    data: formSerialized,
+		    data: $("#myFormEdit").serialize(),
 		    method: 'PUT',
 		    success: function(result) {
 		    	document.getElementById("mensajeEdicion").innerHTML = "Juego <strong>" + document.getElementById("nameInput").value + "</strong> editado con éxito.";

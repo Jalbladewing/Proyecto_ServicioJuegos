@@ -29,12 +29,15 @@ public class InterfazGestorController
 	 **********************************************************
 	 **********************************************************/
 	
+	//PÁGINA PRINCIPAL
 	@RequestMapping("/")
 	public String home()
 	{
+		System.out.println(System.getProperty("user.dir"));
 		return "redirect:" + "/gameList";
 	}
 	
+	//PÁGINA DE LISTA DE JUEGOS
 	@RequestMapping("/gameList")
 	public String gameList(Map<String, List<Game>> gameModel, Map<String, List<Game>> favouriteGamesModel)
 	{
@@ -55,6 +58,7 @@ public class InterfazGestorController
 		return "gametable";	
 	}
 	
+	//PÁGINA DE LISTA DE JUGADORES
 	@RequestMapping("/playerList")
 	public String playerList(Map<String, List<Player>> playerModel, Map<String, List<Player>> followingModel) 
 	{
@@ -83,6 +87,7 @@ public class InterfazGestorController
 	 **********************************************************
 	 **********************************************************/
 	
+	//PÁGINA DE CREAR JUGADOR
 	@RequestMapping("/addPlayer")
 	public String addPlayer(Map<String, Player> model) 
 	{
@@ -92,6 +97,7 @@ public class InterfazGestorController
 		return "playercreation";
 	}
 	
+	//PÁGINA DE CREAR JUEGO
 	@RequestMapping("/addGame")
 	public String addGame(Map<String, Game> model)
 	{
@@ -108,6 +114,7 @@ public class InterfazGestorController
 	 **********************************************************
 	 **********************************************************/
 	
+	//PÁGINA DE EDITAR JUGADOR
 	@RequestMapping("/editPlayer/{id}")
 	public String editPlayer(Map<String, Player> model, @PathVariable int id) 
 	{
@@ -117,6 +124,7 @@ public class InterfazGestorController
 		return "playercreation";
 	}
 	
+	//PÁGINA DE EDITAR JUEGO
 	@RequestMapping("/editGame/{id}")
 	public String editGame(Map<String, Game> model, @PathVariable int id)
 	{

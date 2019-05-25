@@ -2,7 +2,7 @@
 <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script th:src="@{/js/gameTable.js}"/></script>
+<script th:src="@{/js/tableController.js}"/></script>
 <!------ Include the above in your HEAD tag ---------->
 
 <div th:replace="/includes/header :: header"> </div>
@@ -16,6 +16,7 @@
 				<div class="panel panel-default">
 					<div class="panel-body">
 						<div id="mensajeEliminacion" class="alert alert-success" style="display:none;" role="alert"> Jugador eliminado con exito </div>
+						<div id="mensajeError" class="alert alert-danger" style="display:none;" role="alert"> Jugador no encontrado en la base de datos </div>
 						<div class="pull-right">
 							<div class="btn-group">
 								<button type="button" class="btn btn-danger btn-filter" data-target="siguiendo">Siguiendo</button>

@@ -27,7 +27,13 @@ public class PlayerController
 	@Autowired
 	PlayerRepository playerRepo;
 		
-	@GetMapping("/players/{id}/followers")
+	/**
+	 * GET FOLLOWING PLAYERS BY PLAYER ID
+	 * @param id
+	 * @return 200 IF FOUND THE PLAYER, 
+	 * 			404 IF NOT FOUND THE PLAYER
+	 */
+	@GetMapping("/players/{id}/followed")
 	public ResponseEntity<Set<Player>> findFollowersById(@PathVariable int id)
 	{
 		if(playerRepo.findById(id).isPresent())
@@ -39,52 +45,14 @@ public class PlayerController
 		}
 				
 	}
-	
-	@GetMapping("/players/{id}/followed")
-	public ResponseEntity<Set<Player>> findFollowedById(@PathVariable int id)
-	{
-		if(playerRepo.findById(id).isPresent())
-		{
-			return ResponseEntity.ok(playerRepo.findById(id).get().getFollowingPlayers());
-		}else
-		{
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-		}
-				
-	}
-	
-	//Get Followers By Name
-	/*@GetMapping("/players/{name}/followers")
-	public ResponseEntity<Set<Player>> findFollowersByName(@PathVariable String name)
-	{
-		ArrayList<Player> player = new ArrayList<Player>(playerRepo.findByName(name));
-			
-		if(!player.isEmpty())
-		{
-			return ResponseEntity.ok(player.get(0).getFollowingPlayers());
-		}else
-		{
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-		}
-			
-	}*/
-	
-	/*//Get Followed By Name
-	@GetMapping("/players/{name}/followed")
-	public ResponseEntity<Set<Player>> findFollowedByName(@PathVariable String name)
-	{
-		ArrayList<Player> player = new ArrayList<Player>(playerRepo.findByName(name));
-			
-		if(!player.isEmpty())
-		{
-			return ResponseEntity.ok(player.get(0).getFollowedPlayers());
-		}else
-		{
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-		}
-			
-	}*/
 		
+	/**
+	 * START FOLLOWING PLAYER
+	 * @param playerId
+	 * @param follower
+	 * @return 201 IF PUT THE PLAYYER SUCCESFULLY AS FOLLOWING,
+	 * 			202 IF THE PLAYER OR FOLLOWING PLAYER IS NOT FOUND.
+	 */
 	@PostMapping("/players/{playerId}/followers")
 	public ResponseEntity<Player> addFollowerById(@PathVariable int playerId, Player follower) 
 	{
@@ -107,6 +75,14 @@ public class PlayerController
 		return ResponseEntity.created(location).build();
 	}
 		
+	//STOP FOLLOWING PLAYER
+	/**
+	 * STOP FOLLOWING PLAYER
+	 * @param playerId
+	 * @param followerId
+	 * @return 200 IF DELETED SUCCESFULLY
+	 * 			404 IF THE PLAYER OR FOLLOWER DOESN'T EXIST
+	 */
 	@DeleteMapping("/players/{playerId}/followers/{followerId}")
 	public ResponseEntity<Player> deleteFollowerById(@PathVariable int playerId, @PathVariable int followerId) 
 	{

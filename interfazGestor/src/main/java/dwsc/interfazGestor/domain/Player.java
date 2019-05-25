@@ -1,42 +1,17 @@
 package dwsc.interfazGestor.domain;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.xml.bind.annotation.XmlRootElement;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-@XmlRootElement
-@Entity
 public class Player 
 {
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
 	private String name;
 	private String lastname;
 	private int age;
 	private String dni;
-	
-	@ManyToMany
-	@JoinTable(
-			  name = "Player_has_game", 
-			  joinColumns = @JoinColumn(name = "Player_id"), 
-			  inverseJoinColumns = @JoinColumn(name = "Game_id"))
+
 	private Set<Game> favouriteGames;
 
 	public int getId() 

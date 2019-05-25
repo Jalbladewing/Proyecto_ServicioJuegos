@@ -1,35 +1,20 @@
 package dwsc.gestionJuegos.controller;
 
-
-import java.io.File;
-import java.io.IOException;
 import java.net.URI;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.imageio.ImageIO;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import dwsc.gestionJuegos.domain.Game;
@@ -42,6 +27,11 @@ public class GameController
 	@Autowired
 	GameRepository gameRepo;
 	
+	/**
+	 * GET LIST OF ALL GAMES
+	 * @return 200 IF FOUND GAMES, 
+	 * 			404 IF NOT FOUND GAMES
+	 */
 	@GetMapping("/games")
 	public ResponseEntity<List<Game>> findGames()
 	{
@@ -57,7 +47,12 @@ public class GameController
 		
 	}
 	
-	//Juego especifico devuelve 200 o 404 (NOT FOUND)
+	/**
+	 * GET A GAME BY NAME
+	 * @param name
+	 * @return 200 IF FOUND THE GAME, 
+	 * 			404 IF NOT FOUND THE GAME
+	 */
 	@GetMapping("/games/name/{name}")
 	public ResponseEntity<List<Game>> findGameByName(@PathVariable String name)
 	{
@@ -73,6 +68,12 @@ public class GameController
 		
 	}
 	
+	/**
+	 * GET A GAME BY ID
+	 * @param id
+	 * @return 200 IF FOUND THE GAME, 
+	 * 			404 IF NOT FOUND THE GAME
+	 */
 	@GetMapping("/games/{id}")
 	public ResponseEntity<Game> findGameById(@PathVariable int id)
 	{
@@ -91,6 +92,12 @@ public class GameController
 		
 	}
 	
+	/**
+	 * ADD A GAME TO THE LIST OF GAMES
+	 * @param game
+	 * @return 201 IF THE GAME IS CREATED SUCCESFULLY, 
+	 * 			404 IF THE GAME ALREADY EXISTS
+	 */
 	@PostMapping("/games")
 	public ResponseEntity<Game> addGame(Game game) 
 	{
@@ -108,6 +115,13 @@ public class GameController
 		return ResponseEntity.created(location).build();
 	}
 	
+	/**
+	 * EDIT THE INFORMATION OF A GAME
+	 * @param game
+	 * @param id
+	 * @return 200 IF THE GAME IS EDITED SUCCESFULLY, 
+	 * 			404 IF THERE'S NO GAME WITH THAT ID OR IF THE GAME ALREADY EXISTS
+	 */
 	@PutMapping("/games/{id}")
 	public ResponseEntity<Game> editGameById(Game game, @PathVariable int id) 
 	{
@@ -127,6 +141,12 @@ public class GameController
 		return ResponseEntity.ok(dbGame);
 	}
 	
+	/**
+	 * DELETE A GAME
+	 * @param id
+	 * @return 200 IF IT'S DELETED SUCCESFULLY,
+	 * 			404 IF THERE'S NO GAME WITH THAT ID
+	 */
 	@DeleteMapping("/games/{id}")
 	public ResponseEntity<Game> deleteGameById(@PathVariable int id) 
 	{

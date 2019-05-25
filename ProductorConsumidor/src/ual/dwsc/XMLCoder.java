@@ -23,7 +23,7 @@ import org.w3c.dom.Text;
 
 public class XMLCoder 
 {
-	public static boolean codeXML(String fileName, List<Noticia> noticias) throws Exception
+	public static boolean codeXML(String fileUrl, String fileName, List<Noticia> noticias) throws Exception
 	{
 	       if(noticias.isEmpty())
 	       {
@@ -61,7 +61,7 @@ public class XMLCoder
 	            //Generate XML
 	             Source source = new DOMSource(document);
 	            //Indicamos donde lo queremos almacenar
-	             Result result = new StreamResult(new java.io.File("D:\\Descargas\\Informatica\\Master Informatica\\Segundo Cuatrimestre\\Desarrollo Web\\" + fileName+".xml")); //nombre del archivo
+	             Result result = new StreamResult(new java.io.File(fileUrl + fileName+".xml")); //nombre del archivo
 	             Transformer transformer = TransformerFactory.newInstance().newTransformer();
 	             transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");//Saltos de linea
 	             transformer.setOutputProperty(OutputKeys.INDENT, "yes");//Saltos de linea
@@ -72,10 +72,10 @@ public class XMLCoder
 	       return true;
 	  }
 	
-	public static List<Noticia> decodeXML(String fileName)
+	public static List<Noticia> decodeXML(String fileUrl, String fileName)
 	{
 		 try {
-	          File inputFile = new File("D:\\Descargas\\Informatica\\Master Informatica\\Segundo Cuatrimestre\\Desarrollo Web\\" + fileName +".xml");
+	          File inputFile = new File(fileUrl + fileName +".xml");
 	          DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 	          DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 	          Document doc = dBuilder.parse(inputFile);

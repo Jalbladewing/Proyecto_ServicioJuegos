@@ -12,12 +12,12 @@ import java.io.*;
 import java.util.LinkedList;
 
 public class Validador {
-  public static boolean validate(String xml, String xsd) {
+  public static boolean validate(String xml, InputStream xsd) {
      try {
       //XML a validar
       Source xmlFile = new StreamSource(new File(xml));      
       //Esquema con el que comparar
-      Source schemaFile = new StreamSource(new File(xsd));
+      Source schemaFile = new StreamSource(xsd);
       //Preparación del esquema
       SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
       Schema schema = schemaFactory.newSchema(schemaFile);   

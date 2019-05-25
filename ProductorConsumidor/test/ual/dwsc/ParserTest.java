@@ -16,7 +16,7 @@ public class ParserTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		this.xmlOk="noticias.xml";
+		this.xmlOk="noticiasCorrectas.xml";
 		this.xmlTag="noticiasTag.xml";
 		this.xmlContenido="noticiasContenido.xml";
 	}

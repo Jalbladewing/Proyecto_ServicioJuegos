@@ -1,14 +1,21 @@
 function sendForm(evt) 
 { 
 	evt.preventDefault();
-	var playerId = document.getElementById("gameId").value;
+	if(!checkValues()) return;
+	
+	var gameId = document.getElementById("gameId").value;
 	var formSerialized =  "name=" + document.getElementById("nameInput").value + "&" + "url=" + document.getElementById("urlInput").value + "&" + "description=" + document.getElementById("descriptionInput").value;
 	
-	if(playerId == 0)
+	if(gameId == 0)
 	{
-		$.post('http://localhost:8081/games', formSerialized, function() {
-			document.getElementById("mensajeEdicion").innerHTML = "Juego <strong>" + document.getElementById("nameInput").value + "</strong> creado con éxito.";
-	    	document.getElementById("mensajeEdicion").style.display = "block"; 
+		$.post('http://localhost:8081/games', formSerialized, function(result, status, request) {
+			if(request.status == 201)
+			{
+				showCorrectMessage("Juego <strong>" + document.getElementById("nameInput").value + "</strong> creado con éxito.");
+			}else
+			{
+				showIncorrectMessage("Error al crear el Juego, ya existe un juego con el Título <strong>" + document.getElementById("nameInput").value + "</strong>");
+			}
 		});
 	}else
 	{
@@ -17,11 +24,51 @@ function sendForm(evt)
 		    data: formSerialized,
 		    method: 'PUT',
 		    success: function(result) {
-		    	document.getElementById("mensajeEdicion").innerHTML = "Juego <strong>" + document.getElementById("nameInput").value + "</strong> editado con éxito.";
-		    	document.getElementById("mensajeEdicion").style.display = "block"; 
+		    	showCorrectMessage("Juego <strong>" + document.getElementById("nameInput").value + "</strong> editado con éxito.");
+		    },
+		    error: function(result)
+		    {
+		    	showIncorrectMessage("Error al editar el Juego, no se ha encontrado el Juego en la Base de Datos o el Título introducido ya existe.");
 		    }
 		});
 	}
+}
+
+function checkValues()
+{
+	if(document.getElementById("nameInput").value == "")
+	{
+		showIncorrectMessage("Título es un campo obligatorio");
+    	return false;
+	}
+	
+	if(document.getElementById("urlInput").value == "")
+	{
+		showIncorrectMessage("El juego debe de tener una imagen.");
+    	return false;
+	}
+	
+	if(document.getElementById("descriptionInput").value == "")
+	{
+		showIncorrectMessage("Descripción es un campo obligatorio");
+    	return false;
+	}
+	
+	return true;
+}
+
+function showCorrectMessage(message)
+{
+	document.getElementById("mensajeError").style.display = "none"; 
+	document.getElementById("mensajeEdicion").innerHTML = message;
+	document.getElementById("mensajeEdicion").style.display = "block"; 
+}
+
+function showIncorrectMessage(message)
+{
+	document.getElementById("mensajeEdicion").style.display = "none"; 
+	document.getElementById("mensajeError").innerHTML = message;
+	document.getElementById("mensajeError").style.display = "block"; 
 }
 
 $(document).ready( function() {

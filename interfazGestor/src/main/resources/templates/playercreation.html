@@ -15,20 +15,21 @@
         <span></span>
     </p>
     <div id="mensajeEdicion" class="alert alert-success" style="display:none;" role="alert"> Jugador editado con éxito </div>
+    <div id="mensajeError" class="alert alert-danger" style="display:none;" role="alert"> DNI incorrecto </div>
 	<form th:id="${player.id} ? 'myFormEdit' : 'myFormAdd'" action="/playerList" method="post" enctype="multipart/form-data" >
 	<input type="hidden" id="playerId" th:value="${player.id}">
 	<div class="form-group input-group">
 		<div class="input-group-prepend">
 		    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
 		 </div>
-        <input id="nameInput" name="name" class="form-control input-text" placeholder="Nombre" type="text" th:value='${player.name}'>
+        <input id="nameInput" name="name" class="form-control input-text" placeholder="Nombre" type="text" th:value='${player.name}' >
     </div> <!-- form-group// -->
     
     <div class="form-group input-group">
 		<div class="input-group-prepend">
 		    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
 		 </div>
-        <input name="lastname" class="form-control input-text" placeholder="Apellido" type="text" th:value='${player.lastname}'>
+        <input id="playerLastname" name="lastname" class="form-control input-text" placeholder="Apellido" type="text" th:value='${player.lastname}' >
     </div> <!-- form-group// -->
     
     <div class="form-group input-group">
@@ -42,7 +43,7 @@
 		<div class="input-group-prepend">
 		    <span class="input-group-text"> <i class="fa fa-id-card"></i> </span>
 		 </div>
-        <input name="dni" class="form-control input-text" placeholder="DNI" type="text" th:value='${player.dni}'>
+        <input id="playerDNI" name="dni" class="form-control input-text" placeholder="DNI" type="text" th:value='${player.dni}' >
     </div> <!-- form-group// -->
                                        
     <div class="form-group">

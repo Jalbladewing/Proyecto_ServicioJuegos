@@ -24,63 +24,23 @@ public class ServletNews extends HttpServlet {
 	
     public void doGet(HttpServletRequest request, HttpServletResponse response)
     throws IOException, ServletException {
-       StringHolder aux = new StringHolder();
        response.setContentType("text/html");
        PrintWriter out = response.getWriter();
+       String fileUrl = request.getServletContext().getRealPath("/");
+       InputStream xsdUrl = getClass().getClassLoader().getResourceAsStream("../noticias.xsd");      
        out.println("<html>");
        out.println("<head>");
        out.println("<title>Desarrollo Web Basado en Servicios y Componentes. UAL 2018</title>");
        out.println("</head>");
        out.println("<body>");
        
-       if(Validador.validate("D:\\Descargas\\Informatica\\Master Informatica\\Segundo Cuatrimestre\\Desarrollo Web\\noticias.xml", "D:\\Descargas\\Informatica\\Master Informatica\\Segundo Cuatrimestre\\Desarrollo Web\\noticias.xsd") && Parser.validate("D:\\Descargas\\Informatica\\Master Informatica\\Segundo Cuatrimestre\\Desarrollo Web\\noticias.xml"))
+       if(Validador.validate(fileUrl + "noticias.xml", xsdUrl) && Parser.validate(fileUrl + "noticias.xml"))
        {
     	   try 
     	   {
     		   getreference();
 
-    		   /*if (request.getParameter("action").compareTo(" Leer noticia ") == 0)
-    		   {
-    			   
-    			   if(bufferImpl.get(aux))
-        		   {
-      					
-      					List<Noticia> listaNoticias = XMLCoder.decodeXML("noticias");
-    	            	out.println(listaNoticias.get(0).toString() +"<br>");
-    	            	
-    	            	listaNoticias.remove(0);
-    	            	XMLCoder.codeXML("noticias", listaNoticias);
-      	               
-      				}else
-      				{
-      					out.println("No hay noticias disponibles");
-      				}
-    		   }else
-    		   {
-    			   if(bufferImpl.read(aux))
-      				{
-      					
-      					List<Noticia> listaNoticias = XMLCoder.decodeXML("noticias");
-      					out.println(listaNoticias.get(0).toString() +"<br>");
-      	               
-      				}else
-      				{
-      					out.println("No hay noticias disponibles");
-      				}
-    		   }   */
-    		   
-    		   /*if(bufferImpl.read(aux))
- 				{
- 					
- 					List<Noticia> listaNoticias = XMLCoder.decodeXML("noticias");
- 					out.println(listaNoticias.get(0).toString() +"<br>");
- 	               
- 				}else
- 				{
- 					out.println("No hay noticias disponibles");
- 				}*/
-    		   
-    		   List<Noticia> noticias = XMLCoder.decodeXML("noticias");
+    		   List<Noticia> noticias = XMLCoder.decodeXML(fileUrl, "noticias");
     		   RequestDispatcher dispatcher = request.getRequestDispatcher("playerNews.jsp");
     		   request.setAttribute("noticias", noticias); // set your String value in the attribute
     		   dispatcher.forward( request, response );
@@ -110,6 +70,8 @@ public class ServletNews extends HttpServlet {
     }
     public void doPost (HttpServletRequest request, HttpServletResponse response)
     throws IOException, ServletException {
+       String fileUrl = request.getServletContext().getRealPath("/");
+       InputStream xsdUrl = getClass().getClassLoader().getResourceAsStream("../noticias.xsd");
        Enumeration elements = request.getParameterNames();
        String name1 = (String)elements.nextElement(); /** Fecha */
        String value_name1 = request.getParameter(name1);
@@ -130,7 +92,7 @@ public class ServletNews extends HttpServlet {
        {
     	   getreference();
 		
-    	   List<Noticia> noticias = XMLCoder.decodeXML("noticias");
+    	   List<Noticia> noticias = XMLCoder.decodeXML(fileUrl, "noticias");
     	   Noticia nuevaNoticia = new Noticia(value_name1,value_name2, value_name3);
 	       noticias.add(nuevaNoticia);
 	       boolean estado = false;
@@ -139,7 +101,7 @@ public class ServletNews extends HttpServlet {
 	       {
 		       try 
 		       {
-		    	   estado = XMLCoder.codeXML("noticias", noticias);
+		    	   estado = XMLCoder.codeXML(fileUrl, "noticias", noticias);
 		       } catch (Exception e) 
 		       {
 		    	   out.println("Error al codificar el texto");
@@ -147,7 +109,7 @@ public class ServletNews extends HttpServlet {
 		       
 		       if (estado == true) 
 		       {
-		           if(Validador.validate("D:\\Descargas\\Informatica\\Master Informatica\\Segundo Cuatrimestre\\Desarrollo Web\\noticias.xml", "D:\\Descargas\\Informatica\\Master Informatica\\Segundo Cuatrimestre\\Desarrollo Web\\noticias.xsd") && Parser.validate("D:\\Descargas\\Informatica\\Master Informatica\\Segundo Cuatrimestre\\Desarrollo Web\\noticias.xml"))
+		           if(Validador.validate(fileUrl + "noticias.xml", xsdUrl) && Parser.validate(fileUrl + "noticias.xml"))
 		           {
 		        	   if (!bufferImpl.put(noticias.get(noticias.size()-1).toString()))
 							throw new Exception("No se ha podido insertar el elemento en el buffer");

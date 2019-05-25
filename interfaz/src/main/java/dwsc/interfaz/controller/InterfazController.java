@@ -4,12 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
@@ -26,12 +22,20 @@ public class InterfazController
 	private static String asignarJuegosUrl = "http://localhost:8083";
 	private static String asignarSeguidoresUrl = "http://localhost:8084";
 	
+	/**********************************************************
+	 **********************************************************
+	 ******************PÁGINAS DE LISTAR***********************
+	 **********************************************************
+	 **********************************************************/
+	
+	//PÁGINA PRINCIPAL (NOTICIAS)
 	@RequestMapping("/")
 	public String home()
 	{
 		return "redirect:" + "http://localhost:8080/ProductorConsumidor/news";
 	}
 	
+	//PÁGINA DE LISTA DE JUEGOS
 	@RequestMapping("/gameList")
 	public String gameList(Map<String, List<Game>> gameModel, Map<String, List<Game>> favouriteGamesModel)
 	{
@@ -52,6 +56,7 @@ public class InterfazController
 		return "gametable";	
 	}
 	
+	//PÁGINA DE LISTA DE JUGADORES
 	@RequestMapping("/playerList")
 	public String playerList(Map<String, List<Player>> playerModel, Map<String, List<Player>> followingModel) 
 	{
@@ -74,6 +79,13 @@ public class InterfazController
 		return "playerTable";
 	}
 	
+	/**********************************************************
+	 **********************************************************
+	 ******************PÁGINAS DE BUSCAR***********************
+	 **********************************************************
+	 **********************************************************/
+	
+	//PÁGINA DE BUSCAR JUEGO POR NOMBRE
 	@RequestMapping("/gameList/name/{name}")
 	public String gameListByName(Map<String, List<Game>> gameModel, Map<String, List<Game>> favouriteGamesModel, @PathVariable String name) 
 	{
@@ -94,6 +106,7 @@ public class InterfazController
 		return "gametable";	
 	}
 	
+	//PÁGINA DE BUSCAR JUGADOR POR NOMBRE
 	@RequestMapping("/playerList/name/{name}")
 	public String playerListByName(Map<String, List<Player>> playerModel, Map<String, List<Player>> followingModel, @PathVariable String name) 
 	{
@@ -116,6 +129,7 @@ public class InterfazController
 		return "playerTable";
 	}
 	
+	//PÁGINA DE BUSCAR JUGADOR POR APELLIDO
 	@RequestMapping("/playerList/lastname/{lastname}")
 	public String playerListByLastname(Map<String, List<Player>> playerModel, Map<String, List<Player>> followingModel, @PathVariable String lastname) 
 	{
@@ -138,6 +152,7 @@ public class InterfazController
 		return "playerTable";
 	}
 	
+	//PÁGINA DE BUSCAR JUGADOR POR EDAD
 	@RequestMapping("/playerList/age/{age}")
 	public String playerListByAge(Map<String, List<Player>> playerModel, Map<String, List<Player>> followingModel, @PathVariable String age) 
 	{
@@ -160,6 +175,7 @@ public class InterfazController
 		return "playerTable";
 	}
 	
+	//PÁGINA DE BUSCAR JUGADOR POR DNI
 	@RequestMapping("/playerList/dni/{dni}")
 	public String playerListByDni(Map<String, List<Player>> playerModel, Map<String, List<Player>> followingModel, @PathVariable String dni) 
 	{

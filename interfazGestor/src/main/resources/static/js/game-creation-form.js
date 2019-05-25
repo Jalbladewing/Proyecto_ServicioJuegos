@@ -54,6 +54,7 @@ export class GameCreationForm extends LitElement {
                             <span></span>
                         </p>
                         <div id="mensajeEdicion" class="alert alert-success" style="display:none;" role="alert"> Juego editado con éxito </div>
+                        <div id="mensajeError" class="alert alert-danger" style="display:none;" role="alert"> Error, ya existe el título introducido. </div>
                         ${this.gameId != 0 ? html`<form id="myFormEdit" action="/gameList" method="post" enctype="multipart/form-data">` : html`<form id="myFormAdd" action="/gameList" method="post" enctype="multipart/form-data">`}
                         <input type="hidden" id="gameId" value="${this.gameId}">
                         <div class="form-group input-group">

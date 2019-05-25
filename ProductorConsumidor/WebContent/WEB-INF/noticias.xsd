@@ -1,0 +1,15 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:element name="noticias" type="tipoNoticias"/>
+	<xsd:complexType name="tipoNoticias">
+		<xsd:sequence>
+			<xsd:element name="noticia" maxOccurs="unbounded" type="tipoNoticia"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="tipoNoticia">
+		<xsd:sequence>
+			<xsd:element name="date" type="xsd:string"/>
+			<xsd:element name="shortDescription" type="xsd:string"/>
+			<xsd:element name="longDescription" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

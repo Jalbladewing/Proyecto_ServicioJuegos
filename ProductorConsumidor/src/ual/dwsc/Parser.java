@@ -16,7 +16,7 @@ public class Parser {
           DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
           Document doc = dBuilder.parse(inputFile);
           doc.getDocumentElement().normalize();
-          //System.out.println("Elemento raiz :" + doc.getDocumentElement().getNodeName());
+
           NodeList nList = doc.getElementsByTagName("noticia");
 
           for (int temp = 0; temp < nList.getLength(); temp++) 

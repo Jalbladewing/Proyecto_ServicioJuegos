@@ -2,18 +2,8 @@ package dwsc.interfaz.domain;
 
 import java.util.ArrayList;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement
-@Entity
 public class Game 
 {
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
 	private String name;

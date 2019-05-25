@@ -37,23 +37,13 @@ public class PlayerController
 	@Autowired
 	GameRepository gameRepo;
 	
-	/*//Get Favourite Games By Name
-	@GetMapping("/players/{name}/games")
-	public ResponseEntity<Set<Game>> findFavouriteGamesByName(@PathVariable String name)
-	{
-		ArrayList<Player> player = new ArrayList<Player>(playerRepo.findByName(name));
-		
-		if(!player.isEmpty())
-		{
-			return ResponseEntity.ok(player.get(0).getFavouriteGames());
-		}else
-		{
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-		}
-		
-	}*/
 	
-	//Get Favourite Games By Id
+	/**
+	 * GET FAVOURITE GAMES BY PLAYER ID
+	 * @param id
+	 * @return 200 IF FOUND THE PLAYER, 
+	 * 			404 IF NOT FOUND THE PLAYER
+	 */
 	@GetMapping("/players/{id}/games")
 	public ResponseEntity<Set<Game>> findFavouriteGamesById(@PathVariable int id)
 	{
@@ -67,6 +57,14 @@ public class PlayerController
 		
 	}
 	
+	
+	/**
+	 * PUT A GAME AS FAVOURITE
+	 * @param playerId
+	 * @param game
+	 * @return 201 IF PUT THE GAME SUCCESFULLY AS FAVOURITE,
+	 * 			202 IF THE PLAYER OR GAME IS NOT FOUND.
+	 */
 	@PostMapping("/players/{playerId}/games")
 	public ResponseEntity<Game> addFavouriteGameById(@PathVariable int playerId, Game game) 
 	{
@@ -89,6 +87,13 @@ public class PlayerController
 		return ResponseEntity.created(location).build();
 	}
 	
+	/**
+	 * QUIT/DELETE GAME FROM FAVOURITE GAMES
+	 * @param playerId
+	 * @param gameId
+	 * @return 200 IF DELETED SUCCESFULLY
+	 * 			404 IF THE PLAYER OR GAME DOESN'T EXIST
+	 */
 	@DeleteMapping("/players/{playerId}/games/{gameId}")
 	public ResponseEntity<Game> deleteFavouriteGameById(@PathVariable int playerId, @PathVariable int gameId) 
 	{

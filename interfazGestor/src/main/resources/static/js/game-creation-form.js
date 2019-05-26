@@ -68,7 +68,7 @@ export class GameCreationForm extends LitElement {
                             <div class="input-group">
                                 <span class="input-group-btn">
                                     <span class="btn btn-default btn-file">
-                                        Browse… <input type="file" name="imageFile" id="imgInp" placeholder="Subir imagen">
+                                        Browse… <input type="file" name="imageFile" id="imgInp" @change="${this.changeImage}" placeholder="Subir imagen">
                                     </span>
                                 </span>
                                 <input id="urlInput" name="url" type="text" class="form-control" value='${this.gameUrl}' readonly>
@@ -84,15 +84,130 @@ export class GameCreationForm extends LitElement {
                         </div> <!-- form-group// -->
                                                         
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-block" text="Editar Juego" onclick="sendForm(event);">${this.gameId != 0 ? html`Editar Juego` : html`Crear Juego`}</button>
+                            <button type="submit" class="btn btn-primary btn-block" text="Editar Juego" @click="${this.sendForm}">${this.gameId != 0 ? html`Editar Juego` : html`Crear Juego`}</button>
                         </div> <!-- form-group// -->                                                                    
                     </form>
                 </article>`;
   }
 
-  createRenderRoot() {
-    // this is what overrides lit-element's behavior so that the contents don't render in shadow dom
-    return this;
+  changeImage(event) {
+    var input = event.target,
+        label = input.value.replace(/\\/g, '/').replace(/.*\//, '');
+    this.fileSelect(event, [label]);
+    this.loadImage();
+  }
+
+  fileSelect(event, label) {
+    var input = $(event.target).parents('.input-group').find(':text'),
+        log = label;
+
+    if (input.length) {
+      input.val(log);
+    } else {
+      if (log) alert(log);
+    }
+  }
+
+  readURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      var imgUpload = this.shadowRoot.getElementById("img-upload");
+
+      reader.onload = function (e) {
+        imgUpload.src = e.target.result;
+      };
+
+      reader.readAsDataURL(input.files[0]);
+      var frm = new FormData();
+      frm.append('imgInp', input.files[0]);
+      $.ajax({
+        method: 'POST',
+        url: 'http://localhost:8078/imageUpload',
+        data: frm,
+        contentType: false,
+        processData: false,
+        cache: false
+      });
+    }
+  }
+
+  loadImage() {
+    this.readURL(this.shadowRoot.getElementById("imgInp"));
+  }
+
+  sendForm(event) {
+    event.preventDefault();
+    if (!this.checkValues()) return;
+    var gameId = this.shadowRoot.getElementById("gameId").value;
+    var formSerialized = "name=" + this.shadowRoot.getElementById("nameInput").value + "&" + "url=" + this.shadowRoot.getElementById("urlInput").value + "&" + "description=" + this.shadowRoot.getElementById("descriptionInput").value;
+    var mensajeError = this.shadowRoot.getElementById("mensajeError");
+    var mensajeEdicion = this.shadowRoot.getElementById("mensajeEdicion");
+    var name = this.shadowRoot.getElementById("nameInput").value;
+
+    if (gameId == 0) {
+      $.post('http://localhost:8081/games', formSerialized, function (result, status, request) {
+        if (request.status == 201) {
+          var message = "Juego <strong>" + name + "</strong> creado con éxito.";
+          mensajeError.style.display = "none";
+          mensajeEdicion.innerHTML = message;
+          mensajeEdicion.style.display = "block";
+        } else {
+          var message = "Error al crear el Juego, ya existe un juego con el Título <strong>" + name + "</strong>";
+          mensajeEdicion.style.display = "none";
+          mensajeError.innerHTML = message;
+          mensajeError.style.display = "block";
+        }
+      });
+    } else {
+      $.ajax({
+        url: 'http://localhost:8081/games/' + this.shadowRoot.getElementById("gameId").value,
+        data: formSerialized,
+        method: 'PUT',
+        success: function (result) {
+          var message = "Juego <strong>" + name + "</strong> editado con éxito.";
+          mensajeError.style.display = "none";
+          mensajeEdicion.innerHTML = message;
+          mensajeEdicion.style.display = "block";
+        },
+        error: function (result) {
+          var message = "Error al editar el Juego, no se ha encontrado el Juego en la Base de Datos o el Título introducido ya existe.";
+          mensajeEdicion.style.display = "none";
+          mensajeError.innerHTML = message;
+          mensajeError.style.display = "block";
+        }
+      });
+    }
+  }
+
+  checkValues() {
+    if (this.shadowRoot.getElementById("nameInput").value == "") {
+      this.showIncorrectMessage("Título es un campo obligatorio");
+      return false;
+    }
+
+    if (this.shadowRoot.getElementById("urlInput").value == "") {
+      this.showIncorrectMessage("El juego debe de tener una imagen.");
+      return false;
+    }
+
+    if (this.shadowRoot.getElementById("descriptionInput").value == "") {
+      this.showIncorrectMessage("Descripción es un campo obligatorio");
+      return false;
+    }
+
+    return true;
+  }
+
+  showCorrectMessage(message) {
+    this.shadowRoot.getElementById("mensajeError").style.display = "none";
+    this.shadowRoot.getElementById("mensajeEdicion").innerHTML = message;
+    this.shadowRoot.getElementById("mensajeEdicion").style.display = "block";
+  }
+
+  showIncorrectMessage(message) {
+    this.shadowRoot.getElementById("mensajeEdicion").style.display = "none";
+    this.shadowRoot.getElementById("mensajeError").innerHTML = message;
+    this.shadowRoot.getElementById("mensajeError").style.display = "block";
   }
 
 } // Register the element with the browser

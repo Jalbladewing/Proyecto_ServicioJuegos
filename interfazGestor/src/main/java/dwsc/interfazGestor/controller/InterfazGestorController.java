@@ -1,14 +1,23 @@
 package dwsc.interfazGestor.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import dwsc.interfazGestor.domain.Game;
 import dwsc.interfazGestor.domain.Player;
@@ -132,6 +141,32 @@ public class InterfazGestorController
 		model.put("game", game);
 		
 		return "gameCreation";	
+	}
+	
+	/**********************************************************
+	 **********************************************************
+	 ************************EXTRA*****************************
+	 **********************************************************
+	 **********************************************************/
+	
+	// Subida de imágenes al servidor
+	@PostMapping("/imageUpload")
+	public ResponseEntity<Object> fileUpload(@RequestParam("imgInp") MultipartFile file) throws IOException 
+	{
+		   String path = System.getProperty("user.dir") + "\\target\\classes\\static\\images\\";
+		// Save file on system
+		      if (!file.getOriginalFilename().isEmpty()) {
+		         BufferedOutputStream outputStream = new BufferedOutputStream(
+		               new FileOutputStream(
+		                     new File(path, file.getOriginalFilename())));
+		         outputStream.write(file.getBytes());
+		         outputStream.flush();
+		         outputStream.close();
+		      }else{
+		         return new ResponseEntity<>("Invalid file.",HttpStatus.BAD_REQUEST);
+		      }
+		      
+		   return new ResponseEntity<>("File Uploaded Successfully.",HttpStatus.OK);
 	}
 
 }

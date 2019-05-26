@@ -153,15 +153,26 @@ public class InterfazGestorController
 	@PostMapping("/imageUpload")
 	public ResponseEntity<Object> fileUpload(@RequestParam("imgInp") MultipartFile file) throws IOException 
 	{
-		   String path = System.getProperty("user.dir") + "\\target\\classes\\static\\images\\";
+		   String pathGestor = System.getProperty("user.dir") + "\\target\\classes\\static\\images\\";
+		   String pathUsuario = pathGestor.replace("interfazGestor", "interfaz");
 		// Save file on system
 		      if (!file.getOriginalFilename().isEmpty()) {
+		    	  //Crear la imagen en el gestor.
 		         BufferedOutputStream outputStream = new BufferedOutputStream(
 		               new FileOutputStream(
-		                     new File(path, file.getOriginalFilename())));
+		                     new File(pathGestor, file.getOriginalFilename())));
 		         outputStream.write(file.getBytes());
 		         outputStream.flush();
 		         outputStream.close();
+		         
+		         //Crear la imagen en el jugador.
+		         outputStream = new BufferedOutputStream(
+			               new FileOutputStream(
+			                     new File(pathUsuario, file.getOriginalFilename())));
+			         outputStream.write(file.getBytes());
+			         outputStream.flush();
+			         outputStream.close();
+		         
 		      }else{
 		         return new ResponseEntity<>("Invalid file.",HttpStatus.BAD_REQUEST);
 		      }

@@ -50,7 +50,7 @@ public class PlayerController
 	 * START FOLLOWING PLAYER
 	 * @param playerId
 	 * @param follower
-	 * @return 201 IF PUT THE PLAYYER SUCCESFULLY AS FOLLOWING,
+	 * @return 201 IF PUT THE PLAYER SUCCESFULLY AS FOLLOWING,
 	 * 			202 IF THE PLAYER OR FOLLOWING PLAYER IS NOT FOUND.
 	 */
 	@PostMapping("/players/{playerId}/followers")
@@ -75,7 +75,6 @@ public class PlayerController
 		return ResponseEntity.created(location).build();
 	}
 		
-	//STOP FOLLOWING PLAYER
 	/**
 	 * STOP FOLLOWING PLAYER
 	 * @param playerId

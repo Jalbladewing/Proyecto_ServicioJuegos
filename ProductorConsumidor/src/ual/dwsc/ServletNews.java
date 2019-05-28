@@ -6,17 +6,12 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 
 import org.omg.CORBA.ORB;
-import org.omg.CORBA.StringHolder;
-import org.omg.CORBA.ORBPackage.InvalidName;
 import org.omg.CosNaming.NamingContextExt;
 import org.omg.CosNaming.NamingContextExtHelper;
-import org.omg.CosNaming.NamingContextPackage.CannotProceed;
-import org.omg.CosNaming.NamingContextPackage.NotFound;
 
 import BufferApp.Buffer;
 import BufferApp.BufferHelper;
 
-import java.net.*;
 public class ServletNews extends HttpServlet {
 	
 	/** The buffer impl. */

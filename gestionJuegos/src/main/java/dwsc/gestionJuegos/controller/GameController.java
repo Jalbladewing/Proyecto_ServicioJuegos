@@ -96,7 +96,7 @@ public class GameController
 	 * ADD A GAME TO THE LIST OF GAMES
 	 * @param game
 	 * @return 201 IF THE GAME IS CREATED SUCCESFULLY, 
-	 * 			404 IF THE GAME ALREADY EXISTS
+	 * 			202 IF THE GAME ALREADY EXISTS
 	 */
 	@PostMapping("/games")
 	public ResponseEntity<Game> addGame(Game game) 
@@ -161,89 +161,6 @@ public class GameController
 		
 		return ResponseEntity.ok(null);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-
-	@PostMapping("/addGame")
-	public String addGame(Game game, Map<String, List<Game>> model/*, @RequestParam("imageFile") MultipartFile file*/) 
-	{
-		/*ClassLoader classLoader = getClass().getClassLoader();
-		//File fil = new File(classLoader.getResource("static/images").getFile() + "/" + file.getOriginalFilename());
-		Path fileNameAndPath = Paths.get(classLoader.getResource("static/images").getFile() + "/" +file.getOriginalFilename());
-		try 
-		{
-			File fil = new File(classLoader.getResource("static/images").getFile() + "/" +file.getOriginalFilename());
-			//Files.write(fileNameAndPath, file.getBytes());
-		} catch (IOException e) 
-		{
-				e.printStackTrace();
-			}
-		
-		/*try {
-		
-			if (fil.createNewFile()) {
-			    System.out.println("File is created!");
-			} else {
-			    System.out.println("File already exists.");
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-		
-		// UriComponents uriComponents = b.path("/customers/{id}").buildAndExpand(id);
-
-		try
-		{
-			gameRepo.save(game);
-			
-		}catch(Exception e)
-		{
-			//return new ResponseEntity<String>("gameTable", HttpStatus.ACCEPTED);
-			//return "gameTable";
-		}
-		
-		ArrayList<Game> games = new ArrayList<Game>(gameRepo.findAll());
-		model.put("games", games);
-		//return new ResponseEntity<Game>(game, HttpStatus.CREATED);
-        return "gameTable";
-	}
-	
-	@PutMapping("/editGame")
-	public String editGame(Game game, Map<String, Game> model) 
-	{
-		try
-		{
-			gameRepo.save(game);
-			
-		}catch(Exception e)
-		{
-			//return new ResponseEntity<String>("gameTable", HttpStatus.ACCEPTED);
-			//return "gameTable";
-		}
-		
-		model.put("game", game);
-		//return new ResponseEntity<Game>(game, HttpStatus.CREATED);
-        return "gamecreation";
-	}
-	
-	
-	@DeleteMapping("/deleteGame/")
-	public String deleteGame(Game game, Map<String, List<Game>> model) 
-	{
-		gameRepo.delete(game);
-		
-		ArrayList<Game> games = new ArrayList<Game>(gameRepo.findAll());
-		model.put("games", games);
-        return "gameTable";
-	}
-	
 
 }
 

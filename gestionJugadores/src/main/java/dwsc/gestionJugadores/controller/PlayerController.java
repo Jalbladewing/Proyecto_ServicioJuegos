@@ -165,7 +165,7 @@ public class PlayerController
 	 * ADD A PLAYER TO THE LIST OF PLAYERS
 	 * @param player
 	 * @return 201 IF THE PLAYER IS CREATED SUCCESFULLY, 
-	 * 			404 IF THE PLAYER ALREADY EXISTS
+	 * 			202 IF THE PLAYER ALREADY EXISTS
 	 */
 	@PostMapping("/players")
 	public ResponseEntity<Player> addPlayer(Player player) 

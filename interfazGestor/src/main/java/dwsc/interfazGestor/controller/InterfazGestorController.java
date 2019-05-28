@@ -42,7 +42,6 @@ public class InterfazGestorController
 	@RequestMapping("/")
 	public String home()
 	{
-		System.out.println(System.getProperty("user.dir"));
 		return "redirect:" + "/gameList";
 	}
 	
